@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- TOP LOGO -->
+    <nav>
+      <img src="./images/logo.png" alt="Logo" class="logo" />
+    </nav>
+
+    <main class="app">
+      <div class="scroll-content">
+        <marquee> Indian Railway (IRCTC) Lifeline to the nation... </marquee>
+      </div>
+
+      <!-- MOVEMENTS -->
+      <div class="train-list">
+        <div class="movements__row">
+          <div class="movements__type movements__type--train">
+            Train-Name and Train-number
+          </div>
+          <div class="train-details">
+            <span class="train-time-source">04:00 NZM</span>
+            <span class="icon"
+              ><img
+                alt="arrow"
+                src="https://www.confirmtkt.com/img/icons/grey.svg"
+                width="20px"
+            /></span>
+            <span class="duration">19h 45m</span>
+            <span class="icon"
+              ><img
+                alt="arrow"
+                src="https://www.confirmtkt.com/img/icons/grey.svg"
+                width="20px"
+            /></span>
+            <span class="train-time-destination">23:45 MMCT</span>
+            <br />
+            <br />
+            <span class="Available-seats">
+              <span> Available Seats: </span>
+              16
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="summary">
+        <button class="btn--sort">&downarrow; SORT</button>
+      </div>
+
+      <!-- OPERATION: Booking Ticket -->
+      <div class="operation operation--transfer">
+        <h2>Book Ticket</h2>
+        <form class="form form--transfer">
+          <input
+            type="text"
+            placeholder="From"
+            class="form__input source"
+            required=""
+          />
+          <input
+            type="text"
+            placeholder="To"
+            class="form__input destination"
+            required=""
+          /><br />
+
+          <input class="form__input form__date" type="date" required="" />
+          <button class="form__btn btn__search">Search Trains</button>
+        </form>
+      </div>
+
+      <!-- OPERATION: PNR STATUS -->
+      <div class="operation operation--loan">
+        <h2>Check PNR status</h2>
+        <form class="form form--PNR">
+          <input
+            type="text"
+            placeholder="Enter PNR Number"
+            class="form__input form__input--PNR"
+            required=""
+          />
+          <button class="form__btn form__btn--PNR">Go</button>
+        </form>
+      </div>
+
+      <!-- OPERATION: CANCELLATION -->
+      <div class="operation operation--close">
+        <h2>Cancellation</h2>
+        <form class="form form--cancel">
+          <input
+            type="text"
+            placeholder="Enter PNR Number"
+            class="form__input form__input--cancel-PNR"
+            required=""
+          />
+          <button class="form__btn form__btn--PNR">Go</button>
+        </form>
+      </div>
+
+      <!-- LOGOUT TIMER -->
+      <!-- <p class="logout-timer">
+        You will be logged out in <span class="timer">05:00</span>
+      </p> -->
+    </main>
+
+    <div class="modal1-passenger-details hidden">
+      <button class="close-modal1">×</button>
+      <div class="passengers">
+        <!-- <input
+          type="number"
+          placeholder="Number of pssengers"
+          class="passengers-number"
+        /> -->
+        <!-- <select class="passengers-number">
+          <option selected disabled>Number of passengers</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select> -->
+
+        <input type="text" placeholder="Name" class="passenger-name" />
+        <br />
+        <input type="text" placeholder="Age" class="passenger-age" /><br />
+
+        <select class="passenger-gender">
+          <option selected disabled>Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Transgender</option>
+        </select>
+        <br />
+
+        <select class="passenger-birthType">
+          <option selected disabled>Berth type</option>
+          <option>lower</option>
+          <option>middle</option>
+          <option>upper</option>
+        </select>
+
+        <br />
+        <input type="submit" value="Add Passenger" class="add-passenger" />
+      </div>
+    </div>
+
+    <div class="overlay hidden"></div>
+  </body>
+</html>
