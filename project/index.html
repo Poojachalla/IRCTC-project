@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <section class="logo">
+          <a href="index.html" class="logo-link">
+            <span class="h_logo_left_div">
+              <img
+                rel="preload"
+                alt="IRCTC Logo"
+                class="h_logo"
+                src="./images/logo.png"
+              />
+            </span>
+          </a>
+          <!-- <span class="h_logo_right_div">
+                    <img rel="preload" alt="IRCTC Logo" class="h_logo" src="./images/logo.png">
+                </span> -->
+          <!-- <ul class="nav__links">
+            <li class="nav__item">
+              <a class="nav__link" href="#main-section" style="opacity: 1"
+                >Book Ticket</a
+              >
+            </li>
+            <li class="nav__item">
+              <a class="nav__link" href="#" style="opacity: 1"
+                >Check PNR Status</a
+              >
+            </li>
+          </ul> -->
+        </section>
+
+        <nav class="nav__links">
+          <ul>
+            <li class="list-items"><a href="#main-section">Book Ticket</a></li>
+            <li class="list-items">
+              <a href="#">Check PNR Status</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <section class="main-section">
+      <picture>
+        <img src="images/back-image.png" alt="hero image" />
+      </picture>
+      <div class="main-content">
+        <div class="container">
+          <form class="booking">
+            <div class="signup-form bg-dark">
+              <div class="Signup-head bg-warning">
+                <h1>Booking Ticket</h1>
+              </div>
+
+              <div class="signup-content2">
+                <input type="text" placeholder="From" class="input bg-dark" />
+                <input
+                  type="text"
+                  placeholder="To"
+                  class="input bg-dark"
+                /><br />
+
+                <label class="text-white">Departure Date</label>
+                <input
+                  class="date-field bg-dark text-white"
+                  type="date"
+                  required=""
+                />
+
+                <br />
+                <input
+                  type="submit"
+                  value="Search for Trains"
+                  class="submit-btn"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
