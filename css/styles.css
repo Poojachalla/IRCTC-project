@@ -214,7 +214,6 @@ h2 {
   cursor: pointer;
   transition: all 0.3s;
   text-align: center;
-  padding-top: 2.5px;
 }
 
 .form__btn:focus {
