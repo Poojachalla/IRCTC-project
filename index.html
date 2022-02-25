@@ -4,13 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" href="./css/styles.css" />
-    <title>Document</title>
+    <title>IRCTC - Railway Ticket Booking</title>
+
+    <!-- FAV ICON -->
+    <link rel="icon" type="image/x-icon" href="/images/logo.png" />
   </head>
   <body>
     <!-- TOP LOGO -->
     <nav>
-      <img src="./images/logo.png" alt="Logo" class="logo" />
+      <img src="./images/logo1.png" alt="Logo" class="logo" />
     </nav>
 
     <main class="app">
@@ -42,10 +46,10 @@
             <span class="train-time-destination">23:45 MMCT</span>
             <br />
             <br />
-            <span class="Available-seats">
+            <div class="Available-seats">
               <span> Available Seats: </span>
               16
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -87,7 +91,7 @@
             class="form__input form__input--PNR"
             required=""
           />
-          <button class="form__btn form__btn--PNR">Go</button>
+          <div class="form__btn" id="form__btn--PNR">Check Status</div>
         </form>
       </div>
 
@@ -101,7 +105,7 @@
             class="form__input form__input--cancel-PNR"
             required=""
           />
-          <button class="form__btn form__btn--PNR">Go</button>
+          <div class="form__btn" id="form__btn--Cancel-PNR">Cancel Ticket</div>
         </form>
       </div>
 
@@ -111,46 +115,326 @@
       </p> -->
     </main>
 
+    <!-- BOOK_TOCKET MODEL WINDOW -->
     <div class="modal1-passenger-details hidden">
       <button class="close-modal1">×</button>
+      <h3>BOOK TICKETS SECTION</h3>
       <div class="passengers">
-        <!-- <input
-          type="number"
-          placeholder="Number of pssengers"
-          class="passengers-number"
-        /> -->
-        <!-- <select class="passengers-number">
-          <option selected disabled>Number of passengers</option>
+        <!--passenger-scroll"-->
+        <select class="passengers-number">
+          <option selected disabled>Select number of passengers</option>
           <option>1</option>
           <option>2</option>
           <option>3</option>
           <option>4</option>
-        </select> -->
-
-        <input type="text" placeholder="Name" class="passenger-name" />
-        <br />
-        <input type="text" placeholder="Age" class="passenger-age" /><br />
-
-        <select class="passenger-gender">
-          <option selected disabled>Gender</option>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Transgender</option>
-        </select>
-        <br />
-
-        <select class="passenger-birthType">
-          <option selected disabled>Berth type</option>
-          <option>lower</option>
-          <option>middle</option>
-          <option>upper</option>
         </select>
 
+        <form class="Passenger-1 hidden-passenger">
+          <span class="passenger-label">Enter passenger-1 details</span><br />
+          <input
+            type="text"
+            placeholder="Name"
+            class="passenger-name"
+            required=""
+          />
+
+          <input
+            type="text"
+            placeholder="Age"
+            class="passenger-age"
+            required=""
+          />
+
+          <select class="passenger-gender" required="">
+            <option selected disabled>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Transgender</option>
+          </select>
+
+          <select class="passenger-birthType" required="">
+            <option selected disabled>Berth type</option>
+            <option>lower</option>
+            <option>middle</option>
+            <option>upper</option>
+          </select>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
+            placeholder="Phone Number"
+            class="passenger-phoneNumber"
+            required=""
+          />
+
+          <input
+            type="submit"
+            value="Add Passenger"
+            class="add-passenger"
+            required=""
+          />
+        </form>
+
         <br />
-        <input type="submit" value="Add Passenger" class="add-passenger" />
+        <form class="Passenger-2 hidden-passenger">
+          <span class="passenger-label">Enter passenger-2 details</span><br />
+          <input
+            type="text"
+            placeholder="Name"
+            class="passenger-name"
+            required=""
+          />
+
+          <input
+            type="text"
+            placeholder="Age"
+            class="passenger-age"
+            required=""
+          />
+
+          <select class="passenger-gender" required="">
+            <option selected disabled>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Transgender</option>
+          </select>
+
+          <select class="passenger-birthType">
+            <option selected disabled>Berth type</option>
+            <option>lower</option>
+            <option>middle</option>
+            <option>upper</option>
+          </select>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
+            placeholder="Phone Number"
+            class="passenger-phoneNumber"
+            required=""
+          />
+
+          <input
+            type="submit"
+            value="Add Passenger"
+            class="add-passenger"
+            required=""
+          />
+        </form>
+
+        <br />
+        <form class="Passenger-3 hidden-passenger">
+          <span class="passenger-label">Enter passenger-3 details</span><br />
+          <input
+            type="text"
+            placeholder="Name"
+            class="passenger-name"
+            required=""
+          />
+
+          <input
+            type="text"
+            placeholder="Age"
+            class="passenger-age"
+            required=""
+          />
+
+          <select class="passenger-gender" required="">
+            <option selected disabled>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Transgender</option>
+          </select>
+
+          <select class="passenger-birthType" required="">
+            <option selected disabled>Berth type</option>
+            <option>lower</option>
+            <option>middle</option>
+            <option>upper</option>
+          </select>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
+            placeholder="Phone Number"
+            class="passenger-phoneNumber"
+            required=""
+          />
+
+          <input type="submit" value="Add Passenger" class="add-passenger" />
+        </form>
+
+        <br />
+        <form class="Passenger-4 hidden-passenger">
+          <span class="passenger-label">Enter passenger-4 details</span><br />
+          <input
+            type="text"
+            placeholder="Name"
+            class="passenger-name"
+            required=""
+          />
+
+          <input
+            type="text"
+            placeholder="Age"
+            class="passenger-age"
+            required=""
+          />
+
+          <select class="passenger-gender">
+            <option selected disabled>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Transgender</option>
+          </select>
+
+          <select class="passenger-birthType" required="">
+            <option selected disabled>Berth type</option>
+            <option>lower</option>
+            <option>middle</option>
+            <option>upper</option>
+          </select>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
+            placeholder="Phone Number"
+            class="passenger-phoneNumber"
+            required=""
+          />
+
+          <input type="submit" value="Add Passenger" class="add-passenger" />
+        </form>
       </div>
     </div>
 
     <div class="overlay hidden"></div>
+
+    <!-- CHECK PNR MODEL WINDOW -->
+    <div class="modal2-PNR-details hidden1">
+      <button class="close-modal1">×</button>
+      <div class="PNR-details">
+        <h3>PNR STATUS</h3>
+        <h4 class="PNR-status-details">
+          PNR no: <span class="PNR-no">25452341625</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Train Name: <span class="PNR-Train-name">Tirumala Express</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Source: <span class="PNR-source">Narsipatanam</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Destination: <span class="PNR-destination">Tirupathi</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Date of Journey: <span class="PNR-dateofjourney">25-02-2022</span>
+        </h4>
+        <div class="table-wrapper">
+          <table class="PNR-table">
+            <thead>
+              <tr>
+                <th>Passenger</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Status</th>
+                <th>Bearth Type</th>
+                <th>Seat Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>passenger-1</td>
+                <td>Swapna</td>
+                <td>22</td>
+                <td>F</td>
+                <td>Confirmed</td>
+                <td>Upper</td>
+                <td>52</td>
+              </tr>
+              <tr>
+                <td>passenger-2</td>
+                <td>Pooja</td>
+                <td>22</td>
+                <td>F</td>
+                <td>Confirmed</td>
+                <td>Lower</td>
+                <td>67</td>
+              </tr>
+              <!-- <tr>
+                <td>passenger-3</td>
+                <td>Priya</td>
+                <td>18</td>
+                <td>F</td>
+                <td>Confirmed</td>
+                <td>window-side-lower</td>
+                <td>67</td>
+              </tr>
+              <tr>
+                <td>passenger-4</td>
+                <td>Rosy linkon</td>
+                <td>29</td>
+                <td>M</td>
+                <td>Cancelled</td>
+                <td>--NA--</td>
+                <td>--NA--</td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden1"></div>
+
+    <!-- CANCELLATION -->
+
+    <div class="modal3 hidden2">
+      <button class="close-modal1">&times;</button>
+      <div class="container">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1>Cancellation term & conditions</h1>
+          </div>
+          <hr />
+          <div class="panel-body" style="padding: 20px 4px">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </div>
+          <div class="panel-footer" style="padding: 20px 4px">
+            <form class="form">
+              <label class="checkbox-inline">
+                <input type="checkbox" />agree to Cancellation of tickets
+              </label>
+              <div>
+                <button type="submit" class="">confirm</button>
+                <button class="">cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden2"></div>
+
+    <!-- Linking JS file -->
+    <script src="script.js"></script>
   </body>
 </html>
