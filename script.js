@@ -410,7 +410,6 @@ class View {
       elements.forEach((ele, index) => {
         if (index != elements.length - 1) {
           if (this.validatePassengersDetails(ele, ele.value, index) === false) {
-            check = false;
             this.OnlickAddPassenger(value, handler);
             /* if (this.validatePassengersDetails(ele, ele.value, index) === false) {
               this.validatePassengersDetails(ele, ele.value, index);
