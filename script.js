@@ -411,12 +411,8 @@ class View {
         if (index != elements.length - 1) {
           if (this.validatePassengersDetails(ele, ele.value, index) === false) {
             this.OnlickAddPassenger(value, handler);
-            /* if (this.validatePassengersDetails(ele, ele.value, index) === false) {
-              this.validatePassengersDetails(ele, ele.value, index);
-              check = false;
-            }*/
+            check = false;
           } else {
-            check = true;
             val.push(ele.value);
           }
         }
