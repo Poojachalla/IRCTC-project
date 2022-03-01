@@ -332,12 +332,12 @@ h2 {
   font-size: 2rem;
   font-weight: 600;
   color: #333;
+  margin-top: 30px;
 }
 .add-passenger,
 .Confirm_Booking {
   width: 30%;
   padding: 4px 12px;
-  margin: 20px 0;
   box-sizing: border-box;
   background-color: rgb(20, 117, 207);
   cursor: pointer;
