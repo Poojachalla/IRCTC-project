@@ -1,0 +1,372 @@
+[
+  {
+    "train_name": "Krishna Express",
+    "train_number": "59440",
+    "start_time": "07:05:00",
+    "end_time": "20:15:00",
+    "source": "Trirupati",
+    "destination": "Adilabad",
+    "start_date": "2022-03-05",
+    "end_date": "2022-03-05",
+    "Available_seats": "A10",
+    "junctions": [
+      {
+        "Station-1": "Trirupati",
+        "Time": "07:05:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A10"
+      },
+      {
+        "Station-2": "Nellore",
+        "Time": "08:05:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A10"
+      },
+      {
+        "Station-3": "Kavali",
+        "Time": "09:05:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A10"
+      },
+      {
+        "Station-4": "Ongole",
+        "Time": "10:05:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "W5"
+      },
+      {
+        "Station-5": "Chirala",
+        "Time": "15:05:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "W3"
+      },
+      {
+        "Station-6": "Tenali",
+        "Time": "19:05:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A5"
+      },
+      {
+        "Station-7": "Adilabad",
+        "Time": "20:15:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A3"
+      }
+    ]
+  },
+  {
+    "train_name": "Tirumala Express",
+    "train_number": "11808",
+    "start_time": "19:00:00",
+    "end_time": "11:00:00",
+    "source": "Koduru",
+    "destination": "Vishakapatam",
+    "start_date": "2022-03-05",
+    "end_date": "2022-03-06",
+    "Available_seats": "A26",
+    "junctions": [
+      {
+        "Station-1": "Koduru",
+        "Time": "19:00:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A26"
+      },
+      {
+        "Station-2": "Tirupati",
+        "Time": "20:00:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-3": "Bapatla",
+        "Time": "21:00:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A14"
+      },
+      {
+        "Station-4": "Eluru",
+        "Time": "23:00:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A10"
+      },
+      {
+        "Station-5": "Vishakapatam",
+        "Time": "11:00:00",
+        "Date": "2022-03-06",
+        "Available_Seat": "A10"
+      }
+    ]
+  },
+  {
+    "train_name": "Chennai Express",
+    "train_number": "12287",
+    "start_time": "12:30:00",
+    "end_time": "18:00:00",
+    "source": "Chennai Central",
+    "destination": "Pune",
+    "start_date": "2022-03-02",
+    "end_date": "2022-03-02",
+    "Available_seats": "A10",
+    "junctions": [
+      {
+        "Station-1": "Chennai Central",
+        "Time": "12:30:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A10"
+      },
+      {
+        "Station-2": "Koduru",
+        "Time": "15:30:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A9"
+      },
+      {
+        "Station-3": "Tiruttani",
+        "Time": "16:30:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A2"
+      },
+      {
+        "Station-4": "Pune",
+        "Time": "18:00:00",
+        "Date": "2022-03-05",
+        "Available_Seat": "A1"
+      }
+    ]
+  },
+  {
+    "train_name": "Satavahana Express",
+    "train_number": "14631",
+    "start_time": "07:05:00",
+    "end_time": "20:00:00",
+    "source": "Vijayawada",
+    "destination": "Secundrabad",
+    "start_date": "2022-03-02",
+    "end_date": "2022-03-02",
+    "Available_seats": "A16",
+    "junctions": [
+      {
+        "Station-1": "Vijayawada",
+        "Time": "07:05:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-2": "Khammam",
+        "Time": "10:05:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-3": "Warangal",
+        "Time": "15:05:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "W16"
+      },
+      {
+        "Station-4": "Mahbubabad",
+        "Time": "17:05:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-5": "Kazipet",
+        "Time": "19:05:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-6": "Secundrabad",
+        "Time": "20:00:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A10"
+      }
+    ]
+  },
+
+  {
+    "train_name": "Guntur Express",
+    "train_number": "54415",
+    "start_time": "13:30:00",
+    "end_time": "20:00:00",
+    "source": "Guntur",
+    "destination": "Secundrabad",
+    "start_date": "2022-03-03",
+    "end_date": "2022-03-04",
+    "Available_seats": "A36",
+    "junctions": [
+      {
+        "Station-1": "Guntur",
+        "Time": "13:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "W36"
+      },
+      {
+        "Station-2": "Vijayawada",
+        "Time": "15:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-3": "Kondapalli",
+        "Time": "16:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-4": "Khammam",
+        "Time": "17:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "W16"
+      },
+      {
+        "Station-5": "Warangal",
+        "Time": "18:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-6": "Kazipet",
+        "Time": "21:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-7": "Ghanpur",
+        "Time": "23:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-8": "Secundrabad",
+        "Time": "01:00:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A16"
+      }
+    ]
+  },
+
+  {
+    "train_name": "Golconda Express",
+    "train_number": "52415",
+    "start_time": "13:30:00",
+    "end_time": "20:00:00",
+    "source": "Guntur",
+    "destination": "Secundrabad",
+    "start_date": "2022-03-03",
+    "end_date": "2022-03-04",
+    "Available_seats": "A36",
+    "junctions": [
+      {
+        "Station-1": "Guntur",
+        "Time": "13:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "W36"
+      },
+      {
+        "Station-2": "Vijayawada",
+        "Time": "15:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-3": "Kondapalli",
+        "Time": "16:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-4": "Khammam",
+        "Time": "17:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "W16"
+      },
+      {
+        "Station-5": "Warangal",
+        "Time": "18:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-6": "Kazipet",
+        "Time": "21:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-7": "Ghanpur",
+        "Time": "23:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A10"
+      },
+      {
+        "Station-8": "Secundrabad",
+        "Time": "01:00:00",
+        "Date": "2022-03-04",
+        "Available_Seat": "A16"
+      }
+    ]
+  },
+
+  {
+    "train_name": "Falkanama Express",
+    "train_number": "54315",
+    "start_time": "13:30:00",
+    "end_time": "08:30:00",
+    "source": "Secundrabad",
+    "destination": "Guntur",
+    "start_date": "2022-03-02",
+    "end_date": "2022-03-03",
+    "Available_seats": "A36",
+    "junctions": [
+      {
+        "Station-1": "Secundrabad",
+        "Time": "20:00:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A36"
+      },
+      {
+        "Station-2": "Ghanpur",
+        "Time": "21:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A26"
+      },
+      {
+        "Station-3": "Kazipet",
+        "Time": "23:30:00",
+        "Date": "2022-03-02",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-4": "Warangal",
+        "Time": "01:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A6"
+      },
+      {
+        "Station-5": "Khammam",
+        "Time": "03:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A2"
+      },
+      {
+        "Station-6": "Kondapalli",
+        "Time": "06:00:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A16"
+      },
+      {
+        "Station-7": "Vijayawada",
+        "Time": "07:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A14"
+      },
+      {
+        "Station-8": "Guntur",
+        "Time": "08:30:00",
+        "Date": "2022-03-03",
+        "Available_Seat": "A10"
+      }
+    ]
+  }
+]
