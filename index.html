@@ -26,7 +26,7 @@
       <div class="train-list">
         <div class="movements__row">
           <div class="movements__type movements__type--train">
-            Train-Name and Train-number
+            Train-Name(Train-number)
           </div>
           <div class="train-details">
             <span class="train-time-source">04:00 NZM</span>
@@ -45,19 +45,20 @@
             /></span>
             <span class="train-time-destination">23:45 MMCT</span>
             <br />
-            <br />
-            <div class="Available-seats">
-              <span> Available Seats: </span>
-              16
+            <div class="train-dates">
+              <span class="Train-Start-date">2022-03-01</span>
+              <span class="Train-End-date">2022-03-02</span>
             </div>
+            <br />
+            <div class="Available-seats">Available Seats:16</div>
           </div>
         </div>
       </div>
 
       <!-- SUMMARY -->
-      <div class="summary">
+      <!-- <div class="summary">
         <button class="btn--sort">&downarrow; SORT</button>
-      </div>
+      </div>-->
 
       <!-- OPERATION: Booking Ticket -->
       <div class="operation operation--transfer">
@@ -76,7 +77,15 @@
             required=""
           /><br />
 
-          <input class="form__input form__date" type="date" required="" />
+          <!-- <input class="form__input form__date" type="date" required="" /> -->
+          <input
+            type="date"
+            value="2022-03-01"
+            min="2022-03-01"
+            max="2022-06-30"
+            class="form__input form__date"
+            required=""
+          />
           <button class="form__btn btn__search">Search Trains</button>
         </form>
       </div>
@@ -120,19 +129,19 @@
     <!-- BOOK_TOCKET MODEL WINDOW -->
     <div class="modal1-passenger-details hidden">
       <button class="close-modal1">×</button>
-      <h3>BOOK TICKETS SECTION</h3>
+      <h3 class="Book-ticket-section-heading">BOOK TICKETS SECTION</h3>
       <div class="passengers">
         <!--passenger-scroll"-->
         <select class="passengers-number">
           <option selected disabled>Select number of passengers</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
         </select>
 
         <form class="Passenger-1 hidden-passenger">
-          <span class="passenger-label">Enter passenger-1 details</span><br />
+          <div class="passenger-label">Enter passenger-1 details</div>
           <input
             type="text"
             placeholder="Name"
@@ -147,30 +156,29 @@
             required=""
           />
 
-          <select class="passenger-gender" required="">
+          <select class="passenger-gender" required>
             <option selected disabled>Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Transgender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Transgender">Transgender</option>
           </select>
 
-          <select class="passenger-birthType" required="">
+          <select class="passenger-birthType" required>
             <option selected disabled>Berth type</option>
-            <option>lower</option>
-            <option>middle</option>
-            <option>upper</option>
+            <option value="lower">lower</option>
+            <option value="middle">middle</option>
+            <option value="upper">upper</option>
           </select>
 
           <input
             type="tel"
             id="phone"
-            name="phone"
-            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
             placeholder="Phone Number"
             class="passenger-phoneNumber"
             required=""
           />
 
+          <!-- <button type="button" class="add-passenger">Add Passenger</button> -->
           <input
             type="submit"
             value="Add Passenger"
@@ -181,7 +189,7 @@
 
         <br />
         <form class="Passenger-2 hidden-passenger">
-          <span class="passenger-label">Enter passenger-2 details</span><br />
+          <div class="passenger-label">Enter passenger-2 details</div>
           <input
             type="text"
             placeholder="Name"
@@ -196,25 +204,23 @@
             required=""
           />
 
-          <select class="passenger-gender" required="">
+          <select class="passenger-gender" required>
             <option selected disabled>Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Transgender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Transgender">Transgender</option>
           </select>
 
-          <select class="passenger-birthType">
+          <select class="passenger-birthType" required>
             <option selected disabled>Berth type</option>
-            <option>lower</option>
-            <option>middle</option>
-            <option>upper</option>
+            <option value="lower">lower</option>
+            <option value="middle">middle</option>
+            <option value="upper">upper</option>
           </select>
 
           <input
             type="tel"
             id="phone"
-            name="phone"
-            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
             placeholder="Phone Number"
             class="passenger-phoneNumber"
             required=""
@@ -230,7 +236,7 @@
 
         <br />
         <form class="Passenger-3 hidden-passenger">
-          <span class="passenger-label">Enter passenger-3 details</span><br />
+          <div class="passenger-label">Enter passenger-3 details</div>
           <input
             type="text"
             placeholder="Name"
@@ -245,25 +251,24 @@
             required=""
           />
 
-          <select class="passenger-gender" required="">
+          <select class="passenger-gender" required>
             <option selected disabled>Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Transgender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Transgender">Transgender</option>
           </select>
 
           <select class="passenger-birthType" required="">
             <option selected disabled>Berth type</option>
-            <option>lower</option>
-            <option>middle</option>
-            <option>upper</option>
+            <option value="lower">lower</option>
+            <option value="middle">middle</option>
+            <option value="upper">upper</option>
           </select>
 
           <input
             type="tel"
             id="phone"
-            name="phone"
-            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
+            pattern="[7-9]{2}-[0-9]{3}-[0-9]{4}"
             placeholder="Phone Number"
             class="passenger-phoneNumber"
             required=""
@@ -274,7 +279,7 @@
 
         <br />
         <form class="Passenger-4 hidden-passenger">
-          <span class="passenger-label">Enter passenger-4 details</span><br />
+          <div class="passenger-label">Enter passenger-4 details</div>
           <input
             type="text"
             placeholder="Name"
@@ -289,14 +294,14 @@
             required=""
           />
 
-          <select class="passenger-gender">
+          <select class="passenger-gender" required>
             <option selected disabled>Gender</option>
             <option>Male</option>
             <option>Female</option>
             <option>Transgender</option>
           </select>
 
-          <select class="passenger-birthType" required="">
+          <select class="passenger-birthType" required>
             <option selected disabled>Berth type</option>
             <option>lower</option>
             <option>middle</option>
@@ -306,8 +311,7 @@
           <input
             type="tel"
             id="phone"
-            name="phone"
-            pattern="+94[7-9]{2}-[0-9]{3}-[0-9]{4}"
+            pattern="[7-9]{2}-[0-9]{3}-[0-9]{4}"
             placeholder="Phone Number"
             class="passenger-phoneNumber"
             required=""
@@ -315,7 +319,13 @@
 
           <input type="submit" value="Add Passenger" class="add-passenger" />
         </form>
+        <input
+          type="submit"
+          value="Book Tickets"
+          class="Confirm_Booking hidden"
+        />
       </div>
+      <div class="Booking_done hidden">Successfully Booked the tickets</div>
     </div>
 
     <div class="overlay hidden"></div>
@@ -398,17 +408,88 @@
 
     <div class="overlay hidden1"></div>
 
-    <!-- CANCELLATION -->
+    <!-- CANCELLATION MODEL WINDOW -->
 
     <div class="modal3 hidden2">
       <button class="close-modal1">&times;</button>
+      <div class="PNR-details">
+        <h3>Ticket Cancellation</h3>
+        <h4 class="PNR-status-details">
+          PNR no: <span class="PNR-no">25452341625</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Train Name: <span class="PNR-Train-name">Tirumala Express</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Source: <span class="PNR-source">Narsipatanam</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Destination: <span class="PNR-destination">Tirupathi</span>
+        </h4>
+        <h4 class="PNR-status-details">
+          Date of Journey: <span class="PNR-dateofjourney">25-02-2022</span>
+        </h4>
+        <div class="table-wrapper">
+          <table class="PNR-table">
+            <thead>
+              <tr>
+                <th>Passenger</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Status</th>
+                <th>Bearth Type</th>
+                <th>Seat Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>passenger-1</td>
+                <td>Swapna</td>
+                <td>22</td>
+                <td>F</td>
+                <td>Confirmed</td>
+                <td>Upper</td>
+                <td>52</td>
+              </tr>
+              <tr>
+                <td>passenger-2</td>
+                <td>Pooja</td>
+                <td>22</td>
+                <td>F</td>
+                <td>Confirmed</td>
+                <td>Lower</td>
+                <td>67</td>
+              </tr>
+              <!-- <tr>
+                <td>passenger-3</td>
+                <td>Priya</td>
+                <td>18</td>
+                <td>F</td>
+                <td>Confirmed</td>
+                <td>window-side-lower</td>
+                <td>67</td>
+              </tr>
+              <tr>
+                <td>passenger-4</td>
+                <td>Rosy linkon</td>
+                <td>29</td>
+                <td>M</td>
+                <td>Cancelled</td>
+                <td>--NA--</td>
+                <td>--NA--</td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="container">
-        <div class="panel panel-default">
+        <div class="panel">
           <div class="panel-heading">
-            <h1>Cancellation term & conditions</h1>
+            <h4>Terms & Condition</h4>
           </div>
-          <hr />
-          <div class="panel-body" style="padding: 20px 4px">
+          <div class="panel-body">
+            <hr />
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -418,15 +499,16 @@
               nulla pariatur. Excepteur sint occaecat cupidatat non proident,
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+            <br />
           </div>
-          <div class="panel-footer" style="padding: 20px 4px">
+          <div class="panel-footer">
             <form class="form">
               <label class="checkbox-inline">
                 <input type="checkbox" />agree to Cancellation of tickets
               </label>
               <div>
-                <button type="submit" class="">confirm</button>
-                <button class="">cancel</button>
+                <button type="submit" class="btn_confirm">confirm</button>
+                <button class="btn_cancel">cancel</button>
               </div>
             </form>
           </div>
