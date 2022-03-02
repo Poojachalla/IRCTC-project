@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="./css/styles.css" />
+    <script type="module" defer src="controller.js"></script>
     <title>IRCTC - Railway Ticket Booking</title>
 
     <!-- FAV ICON -->
@@ -80,8 +81,8 @@
           <!-- <input class="form__input form__date" type="date" required="" /> -->
           <input
             type="date"
-            value="2022-03-01"
-            min="2022-03-01"
+            value=""
+            min=""
             max="2022-06-30"
             class="form__input form__date"
             required=""
@@ -129,7 +130,7 @@
     <!-- BOOK_TOCKET MODEL WINDOW -->
     <div class="modal1-passenger-details hidden">
       <button class="close-modal1">×</button>
-      <h3 class="Book-ticket-section-heading">BOOK TICKETS SECTION</h3>
+      <h3 class="Book-ticket-section-heading">TICKET BOOKING SECTION</h3>
       <div class="passengers">
         <!--passenger-scroll"-->
         <select class="passengers-number">
@@ -325,7 +326,7 @@
           class="Confirm_Booking hidden"
         />
       </div>
-      <div class="Booking_done hidden">Successfully Booked the tickets</div>
+      <div class="Booking_done hidden">Successfully Booked the tickets...</div>
     </div>
 
     <div class="overlay hidden"></div>
@@ -519,6 +520,5 @@
     <div class="overlay hidden2"></div>
 
     <!-- Linking JS file -->
-    <script src="script.js"></script>
   </body>
 </html>
