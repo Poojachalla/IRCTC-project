@@ -29,26 +29,40 @@
           <div class="movements__type movements__type--train">
             Train-Name(Train-number)
           </div>
+
+          <!-- NEW CHANGE - START-->
+
           <div class="train-details">
-            <span class="train-time-source">04:00 NZM</span>
-            <span class="icon"
-              ><img
-                alt="arrow"
-                src="https://www.confirmtkt.com/img/icons/grey.svg"
-                width="20px"
-            /></span>
-            <span class="duration">19h 45m</span>
-            <span class="icon"
-              ><img
-                alt="arrow"
-                src="https://www.confirmtkt.com/img/icons/grey.svg"
-                width="20px"
-            /></span>
-            <span class="train-time-destination">23:45 MMCT</span>
-            <br />
+            <div class="train-stations">
+              <!-- CHANGE - ADDED DIV TAG - START -->
+              <span class="train-time-source">NZM</span>
+              <span class="icon"
+                ><img
+                  alt="arrow"
+                  src="https://www.confirmtkt.com/img/icons/grey.svg"
+                  width="20px"
+              /></span>
+              <span class="duration">19h 45m</span>
+              <span class="icon"
+                ><img
+                  alt="arrow"
+                  src="https://www.confirmtkt.com/img/icons/grey.svg"
+                  width="20px"
+              /></span>
+              <span class="train-time-destination">MMCT</span>
+              <br />
+            </div>
+            <!-- CHANGE - ADDED DIV TAG - END -->
+
             <div class="train-dates">
-              <span class="Train-Start-date">2022-03-01</span>
-              <span class="Train-End-date">2022-03-02</span>
+              <span class="Train-Start-date">
+                <!-- CHANGE - ADDED SPAN TAG - START -->
+                <span class="train-timings">04:00</span> Thu Mar 3 2022</span
+              >
+              <span class="Train-End-date">
+                <span class="train-timings">23:45</span> Thu Mar 3 2022</span
+              >
+              <!-- CHANGE - ADDED SPAN train-timings TAG - END -->
             </div>
             <br />
             <div class="Available-seats">Available Seats:16</div>
