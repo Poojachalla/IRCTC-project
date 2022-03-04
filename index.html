@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="./css/styles.css" />
+    
     <script type="module" defer src="controller.js"></script>
-    <title>IRCTC - Railway Ticket Booking</title>
+    <title>IRCTC - Railway Connect</title>
 
     <!-- FAV ICON -->
     <link rel="icon" type="image/x-icon" href="/images/logo.png" />
+
   </head>
   <body>
     <!-- TOP LOGO -->
@@ -29,12 +31,8 @@
           <div class="movements__type movements__type--train">
             Train-Name(Train-number)
           </div>
-
-          <!-- NEW CHANGE - START-->
-
           <div class="train-details">
             <div class="train-stations">
-              <!-- CHANGE - ADDED DIV TAG - START -->
               <span class="train-time-source">NZM</span>
               <span class="icon"
                 ><img
@@ -52,17 +50,14 @@
               <span class="train-time-destination">MMCT</span>
               <br />
             </div>
-            <!-- CHANGE - ADDED DIV TAG - END -->
 
             <div class="train-dates">
               <span class="Train-Start-date">
-                <!-- CHANGE - ADDED SPAN TAG - START -->
                 <span class="train-timings">04:00</span> Thu Mar 3 2022</span
               >
               <span class="Train-End-date">
                 <span class="train-timings">23:45</span> Thu Mar 3 2022</span
               >
-              <!-- CHANGE - ADDED SPAN train-timings TAG - END -->
             </div>
             <br />
             <div class="Available-seats">Available Seats:16</div>
@@ -79,20 +74,37 @@
       <div class="operation operation--transfer">
         <h2>Book Ticket</h2>
         <form class="form form--transfer">
-          <input
+
+          <!-- AUTOCOMPLETE START-->
+          <!-- type="text" -->
+            <!-- <label for = "automplete-1">Tags: </label> -->
+
+           <!--  <input name="car" list="anrede" /> -->
+          
+            <input
             type="text"
             placeholder="From"
             class="form__input source"
+            id="automplete-1"
+            name="Place"
             required=""
-          />
+            list="From"
+            />
+          <datalist id="From"></datalist>
+
           <input
             type="text"
             placeholder="To"
+            id="myInputTo"
             class="form__input destination"
             required=""
-          /><br />
+            list="To"
+          />
+          <datalist id="To"></datalist>
+          <br />
 
-          <!-- <input class="form__input form__date" type="date" required="" /> -->
+          <!-- AUTOCOMPLETE END-->
+
           <input
             type="date"
             value=""
@@ -100,6 +112,7 @@
             max="2022-06-30"
             class="form__input form__date"
             required=""
+            onkeydown="return false"
           />
           <button class="form__btn btn__search">Search Trains</button>
         </form>

@@ -1,3 +1,5 @@
+import 'core-js/actual'
+
 /******* CLASS VIEW  ******************/
 class View {
   _trainlistElement = document.querySelector(".train-list");
@@ -11,7 +13,9 @@ class View {
   _trainslist;
   _helperHandler;
   _currentDate = new Date().toISOString().split("T")[0];
-
+  
+  _places = ["Anakapalle","Tirupati","Gundur","Nellore","Kavali","Ongole","Chirala","Tenali","Vijayawada","Warangal","Secunderabad","Nizamabad","Adilabad","Vishakapatnam","Rajamundry","Eluru","Hyderabad","Guntur","Chennai Central","Mahbubabad","Kazipet","Kondapalli","Khammam","Ghanpur","New Delhi","Agra Cantt","Gwalior","Bhopal","Nagpur","Chandrapur","Balharshah","Sirpur Kagazngr","Ramgundam"];
+  
   constructor() {
     this.BookTicket(this._searchButton);
   }
@@ -47,32 +51,41 @@ class View {
   removeTrainDetailsMovements() {
     document.querySelector(".train-list").innerHTML = "";
   }
+
   displayMovements(trainslist) {
     this._trainslist = trainslist;
     this.removeTrainDetailsMovements(); //(or).textContent=0
+    //console.log(this._trainslist);
+    trainslist.forEach((mov, index) =>
+      //const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
 
-    //const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+      //console.log(trainslist);
+      {
+        let temp, col;
+        if (mov[4][2].slice(0, 1) === "W") {
+          temp = "Waiting List:" + mov[4][2];
+          col = "#ff3838";
+        } else {
+          temp = "Available Seats:" + mov[4][2];
+          col = "#7dd035";
+        }
+        if (mov[5] === "TRAIN DEPARTED") {
+          temp = "TRAIN DEPARTED";
+          col = "#ff3838";
+        }
+        if (mov[5] === "NOT AVAILABLE") {
+          temp = "NOT AVAILABLE";
+          col = "#ff3838";
+        }
 
-    //console.log(trainslist);
-    trainslist.forEach((mov, index) => {
-      let temp, col;
-      if (mov[1].Available_Seat.slice(0, 1) === "W") {
-        temp = "Waiting List";
-        col = "#ff3838";
-      } else {
-        temp = "Available Seats";
-        col = "#7dd035";
-      }
-      const html = `
+        const html = `
         <div class="movements__row">
             <div class="movements__type movements__type--train">
             ${mov[0].train_name} (${mov[0].train_number})
             </div>
             <div class="train-details">
-              <span class="train-time-source">${mov[1].Time} ${
-        Object.values(mov[1])[0]
-      }
-        </span>
+              <div class="train-stations">
+              <span class="train-time-source">${Object.values(mov[1])[0]}</span>
               <span class="icon">
                 <img
                   alt="arrow"
@@ -88,36 +101,57 @@ class View {
                   width="20px"
                 />
               </span>
-              <span class="train-time-destination">${mov[2].Time} ${
-        Object.values(mov[2])[0]
-      }
-      </span>
+              <span class="train-time-destination">${
+                Object.values(mov[2])[0]
+              }</span>
               <br />
+              </div>
               <div class="train-dates">
-                <span class="Train-Start-date">${this.getDateFormat(
-                  mov[1].Date
-                )}</span>
-                <span class="Train-End-date">${this.getDateFormat(
-                  mov[2].Date
-                )}</span>
+              <span class="Train-Start-date">
+                <span class="train-timings">${
+                  mov[1].Time
+                }</span> ${this.getDateFormat(mov[4][0])}</span
+              >
+              <span class="Train-End-date">
+                <span class="train-timings">${
+                  mov[2].Time
+                } </span> ${this.getDateFormat(mov[4][1])}</span
+              >
               </div>
               <br />
               <div class="Available-seats" style="background-color: ${col};">
-                ${temp}:${mov[1].Available_Seat}
+                ${temp}
               </div>
             </div>
           </div>`;
 
-      //${new Date(`${mov[1].Date}`).slice(1,13)}
-      document
-        .querySelector(".train-list")
-        .insertAdjacentHTML("afterbegin", html); //this._trainlistElement this keyword is not working
-    });
+        document
+          .querySelector(".train-list")
+          .insertAdjacentHTML("afterbegin", html); //this._trainlistElement this keyword is not working
+      }
+    );
   }
 
+  /*autoComplete feature*/
+  AutoCompleteForFromANDTo(){
+  let options = '';
+
+  for (let i = 0; i < this._places.length; i++) {
+  options += '<option value="' + this._places[i] + '" />';
+  }
+
+  document.getElementById('From').innerHTML = options;
+  document.getElementById('To').innerHTML = options;
+  }
+  
+
+  //Search button click function
   bindSearchTrainsButton(handler) {
+    //this.autocomplete(document.getElementById("myInput"), this._places);
     this._searchButton.addEventListener("click", (event) => {
       event.preventDefault();
+
+      //this.closeAllLists(event.target);
 
       if (
         !this._source.value ||
@@ -129,7 +163,11 @@ class View {
       } /* else if (new Date(this._date.value) < new Date()) {
         alert("please enter correct date");
       } */ else {
-        handler(this._source.value, this._destination.value, this._date.value);
+        handler(
+          this._source.value.trimStart().trimEnd(),
+          this._destination.value.trimStart().trimEnd(),
+          this._date.value
+        );
 
         this._source.value = "";
         this._destination.value = "";
@@ -143,25 +181,28 @@ class View {
     this.getModel1Elements();
     //console.log(this._openButton1);
     document.querySelectorAll(".Available-seats").forEach((ele) => {
-      ele.addEventListener("click", (event) => {
-        ele.style.backgroundColor = "#a9b6af";
-        event.preventDefault();
-        this._modal1.classList.remove("hidden");
-        this._overlay[0].classList.remove("hidden");
+      if (
+        ele.textContent.trim() != "TRAIN DEPARTED" &&
+        ele.textContent.trim() != "NOT AVAILABLE"
+      ) {
+        ele.addEventListener("click", (event) => {
+          ele.style.backgroundColor = "#a9b6af";
+          event.preventDefault();
+          this._modal1.classList.remove("hidden");
+          this._overlay[0].classList.remove("hidden");
 
-        document.querySelector(".passengers").classList.remove("hidden");
-        document
-          .querySelector(".Book-ticket-section-heading")
-          .classList.remove("hidden");
-        document.querySelector(".Booking_done").classList.add("hidden");
+          document.querySelector(".passengers").classList.remove("hidden");
+          document
+            .querySelector(".Book-ticket-section-heading")
+            .classList.remove("hidden");
+          document.querySelector(".Booking_done").classList.add("hidden");
 
-        const movementSelected = event.target.closest(".movements__row");
-        if (!movementSelected) return;
+          const movementSelected = event.target.closest(".movements__row");
+          if (!movementSelected) return;
 
-        handler(movementSelected);
-        /* const { updateTo } = event.target.closest(".movements__row").dataset;
-          console.log(updateTo); */
-      });
+          handler(movementSelected);
+        });
+      }
     });
   }
 
@@ -171,8 +212,11 @@ class View {
       this._modal1.classList.add("hidden");
       this._overlay[0].classList.add("hidden");
       document.querySelectorAll(".Available-seats").forEach((ele) => {
-        //console.log(ele.textContent, ele.value);
-        if (ele.textContent.trim().slice(0, 1) === "W") {
+        if (
+          ele.textContent.trim().slice(0, 1) === "W" ||
+          ele.textContent.trim() === "TRAIN DEPARTED" ||
+          ele.textContent.trim() === "NOT AVAILABLE"
+        ) {
           ele.style.backgroundColor = "#ff3838";
         } else {
           ele.style.backgroundColor = "#7dd035";
@@ -194,11 +238,6 @@ class View {
       this.helperToResetNoOfpassengerFeilds(event);
       const value = event.target.value;
       this.addPassengersDetailsFields(value, handler);
-
-      /* console.log(this._passengerdetails); */
-      //this.OnclickConfirmBooking(this._passengerdetails, handler);
-
-      //handler(value);
     });
   }
 
@@ -251,17 +290,17 @@ class View {
 
   OnlickAddPassenger(value, handler) {
     document.querySelectorAll(".add-passenger").forEach((ele, i) => {
+      ele.style.pointerEvents="auto";
       ele.addEventListener("click", (e) => {
-        e.preventDefault(); //neccessary
-        /* console.log("Clicked add passenger", e);
-          /* e.target.value = "Added Passenger" */
+        e.preventDefault(); //neccessary to prevent default event
         e.stopImmediatePropagation(); //This helps by stopping event from firing more than once
-        this.getEnteredPassengerDetails(i + 1, handler, e);
+        this.getEnteredPassengerDetails(i + 1, handler, e,ele);
+        return;
       });
     });
   }
 
-  getEnteredPassengerDetails(value, handler, clickElement) {
+  getEnteredPassengerDetails(value, handler, clickElement,elementAddPassenger) {
     let val = [];
     if (
       document
@@ -280,36 +319,25 @@ class View {
           if (this.validatePassengersDetails(ele, ele.value, index) === false) {
             check = false;
             this.OnlickAddPassenger(value, handler);
-            /* if (this.validatePassengersDetails(ele, ele.value, index) === false) {
-                this.validatePassengersDetails(ele, ele.value, index);
-                check = false;
-              }*/
           } else {
             val.push(ele.value);
           }
         }
       });
 
-      /* let check = true; */
-      /* if (val) {
-          val.forEach((e, index) => {
-            console.log("entered check is false");
-            if (this.validatePassengersDetails(e, index) === false) {
-              check = false;
-            } else check = true;
-          });
-        } */
       if (check) {
         //console.log("inside entered");
         this._passengerdetails.push(val);
 
         //To remove duplicates
-        this._passengerdetails = new Set(this._passengerdetails);
-        this._passengerdetails = Array.from(this._passengerdetails);
+        //this._passengerdetails = Array.from(new Set(this._passengerdetails)); */
+        //this._passengerdetails = Array.from(this._passengerdetails);
 
         //console.log(this._passengerdetails);
         elements[elements.length - 1].value = "Added Passenger";
         clickElement.target.style.backgroundColor = "red";
+        clickElement.target.style.pointerEvents= "none";
+        //clickElement.target.classList.add("onClick");
 
         document.querySelector(".Confirm_Booking").classList.remove("hidden");
         this.OnclickConfirmBooking(this._passengerdetails, handler);
@@ -357,7 +385,6 @@ class View {
     }
     if (index === 4) {
       let regx = /^[6-9]\d{9}$/;
-      //console.log(regx.test(val));
       if (val === "" || regx.test(val) === false) {
         alert("Please enter valid phone Number");
         ele.value = "";
@@ -367,7 +394,6 @@ class View {
   }
 
   OnclickConfirmBooking(details, handler) {
-    //console.log("Entered into OnclickConfirmBooking");
     document
       .querySelector(".Confirm_Booking")
       .addEventListener("click", (event) => {
@@ -375,7 +401,7 @@ class View {
         //event.target.style.backgroundColor = "red";
         event.stopImmediatePropagation();
         this.showBookingCompletedWindow();
-        //console.log(this._passengerdetails);
+        console.log(this._passengerdetails)
         handler(this._passengerdetails);
       });
   }
@@ -389,15 +415,12 @@ class View {
   }
 
   updateUIWithUpdatedAvailableSeats(Selected_train, seats) {
-    //console.log(this._trainslist);
     Selected_train = Selected_train.querySelector(".movements__type--train")
       .textContent.replace(/\s+/g, "")
       .split(")");
     Selected_train = Selected_train[0].split("(");
-    //console.log(Selected_train[1]);
     this._trainslist.forEach(function (mov, index) {
-      if (Selected_train[1] === mov[0].train_number)
-        mov[1].Available_Seat = seats;
+      if (Selected_train[1] === mov[0].train_number) mov[4][2] = seats;
     });
     this.displayMovements(this._trainslist);
     this.bindAvailableSeatsClick(this._helperHandler);
@@ -410,9 +433,9 @@ class View {
         .textContent.trimStart()
         .trimEnd(),
       movements.querySelector(".train-time-source").textContent.trimEnd(),
-      movements.querySelector(".Train-Start-date").textContent,
+      movements.querySelector(".Train-Start-date").textContent.trimStart(),
       movements.querySelector(".train-time-destination").textContent.trimEnd(),
-      movements.querySelector(".Train-End-date").textContent,
+      movements.querySelector(".Train-End-date").textContent.trimStart(),
     ];
   }
 }
