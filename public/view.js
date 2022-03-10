@@ -613,7 +613,7 @@ class View {
 
       const html = `<tr class= "test${index + 1}">
       
-              <td><input class="checked hidden" type="checkbox"/>Passenger-${
+              <td><input class="checked hidden" type="checkbox"/> Passenger-${
                 index + 1
               }</td>
               <td class="Pname">${ele.passengername}</td>
