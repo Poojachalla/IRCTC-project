@@ -66,10 +66,10 @@ class Controller {
     );
 
     //TO update avaialble seats of trains in JSON file
-    /* this.model.updateJSONWithUpdatedAvailableSeats(
+    this.model.updateJSONWithUpdatedAvailableSeats(
       this._trainBookedDetails,
       this._updatedAvailableSeats
-    ); */
+    );
     //this.view.bindpnrsearch(this.handlepnrsearch);
   };
 
@@ -111,7 +111,7 @@ class Controller {
     for (let i = 0; i < 5; i++) {
       Pnr += value[0][i].at(0);
     }
-    Pnr += Math.floor(1000 + Math.random() * 9000); //Generating random 4 digit number
+    Pnr += Math.floor(Math.random() * 90000) + 10000; //Generating random 5 digit number
     value.push(Pnr.toUpperCase());
     //console.log(value, this._movementSelected);
 
@@ -122,6 +122,7 @@ class Controller {
     console.log("Booked train details:", this._trainBookedDetails);
     value.push(this._trainBookedDetails); //this.view.getTrainBookedDetails(this._movementSelected)); //To push selected train details into value array
     this.view.showBookingCompletedWindowWithPNRNumber(Pnr.toUpperCase());
+    console.log(value);
     this.model.storeDataOfBookedTicketIntoDataBase(value);
   }
   handlepnrsearch = async (pnrnumber) => {

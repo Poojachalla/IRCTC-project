@@ -399,8 +399,9 @@ class View {
         ele.value = "";
         return false;
       }
-      if (isNaN(val) || val < 1 || val > 100) {
-        alert("The age must be a number between 1 and 100");
+      if (isNaN(val) || val < 5 || val > 100) {
+        //age must be between 5-100
+        alert("The age must be a number between 5 and 100");
         ele.value = "";
         return false;
       }
@@ -484,7 +485,7 @@ class View {
       event.preventDefault();
       if (!this._pnrnumber.value) {
         alert("PNR Number can't be Null.Please enter PNR number");
-      } else if (this._pnrnumber.value.length !== 9) {
+      } else if (this._pnrnumber.value.length !== 10) {
         alert("Please enter valid  9 digit PNR number");
       } else {
         handler(this._pnrnumber.value.trimStart().trimEnd());
