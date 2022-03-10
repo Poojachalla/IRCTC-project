@@ -486,7 +486,7 @@ class View {
       if (!this._pnrnumber.value) {
         alert("PNR Number can't be Null.Please enter PNR number");
       } else if (this._pnrnumber.value.length !== 10) {
-        alert("Please enter valid  9 digit PNR number");
+        alert("Please enter valid  10 digit PNR number");
       } else {
         handler(this._pnrnumber.value.trimStart().trimEnd());
         this._pnrnumber.value = "";
