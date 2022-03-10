@@ -627,7 +627,7 @@ class View {
         .querySelector(".table-body-cancel")
         .insertAdjacentHTML("beforeend", html);
         if(ele.passengerstatus!=="Cancelled"){
-          document.querySelectorAll(".checked").classList.remove("hidden");
+          document.querySelectorAll(".checked")[index].classList.remove("hidden");
         }
     });
     this._modalPNRCancel.classList.remove("hidden2");
