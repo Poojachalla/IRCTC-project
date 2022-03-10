@@ -16,6 +16,8 @@ class Controller {
     //console.log("LAST");
     //this.view.bindpnrsearch(this.handlepnrsearch);
     this.view.bindpnrsearch(this.handlepnrsearch);
+    this.view.bindpnrCancelsearch(this.handlepnrsearchCancel);
+    this.view.bindConfirmCancel(this.getCancelPassengerData);
   }
 
   init() {
@@ -139,5 +141,47 @@ class Controller {
     }
     this.view.bindModelPNRWindowClose();
   };
+
+  //Cancellation
+  handlepnrsearchCancel = async (pnrnumber) => {
+    [this._pnrnumberlist, this._status] =
+      await this.model.getstoreDataOfBookedTicketIntoDataBase(pnrnumber);
+
+    //To check whether pnr number is found or not
+    if (this._status === false) {
+      alert("PNR Number not found");
+      this.view._pnrCancelnumber.value = "";
+    } else {
+      this.view.bindModelWindowpnrCancel(this._pnrnumberlist);
+      //[this.Pnr, ...this.PassengerCancelData] = this.view.bindConfirmCancel();
+      /* console.log(this.view.bindConfirmCancel()); */
+      // this.model.storeDataOfCancelledTicketIntoDataBase(this.PassengerCancelData, this.Pnr);
+      //storeDataOfCancelledTicketIntoDataBase
+      /* this.view.bindConfirmCancel(this.getCancelPassengerData()); */
+      //console.log(this.view.getCancelPassengerData());
+    }
+    this.view.bindModelPNRCancelWindowClose();
+  };
+
+  getCancelPassengerData=((
+    pnrnumberCancel,
+    CancelBerth,
+    CancelName,
+    CancelSeatNo,
+    CancelStatus
+  )=>{
+    console.log(
+      pnrnumberCancel,
+      CancelBerth,
+      CancelName,
+      CancelSeatNo,
+      CancelStatus
+    );
+    this.model.storeDataOfCancelledTicketIntoDataBase(pnrnumberCancel,
+      CancelBerth,
+      CancelName,
+      CancelSeatNo,
+      CancelStatus)
+  });
 }
 const app = new Controller(Model, View);

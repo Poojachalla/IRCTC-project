@@ -9,6 +9,13 @@ class View {
   _searchButton = document.querySelector(".btn__search");
   _pnrnumber = document.querySelector(".form__input--PNR");
   _pnrsearchButton = document.querySelector("#form__btn--PNR");
+  _pnrCancelsearchButton = document.getElementById("form__btn--Cancel-PNR");
+  _pnrCancelnumber = document.querySelector(".form__input--cancel-PNR");
+  _CancelStatus;
+  _CancelName;
+  _CancelBerth;
+  _CancelSeatNo;
+  _pnrnumberCancel;
   // _trainsFoundlist;
   //_status;
   _pnrnumberlist;
@@ -548,6 +555,133 @@ class View {
       event.preventDefault();
       this._modalPNR.classList.add("hidden1");
       this._overlay1[1].classList.add("hidden1");
+    });
+  }
+
+  //Cancellation
+
+  bindpnrCancelsearch(handler) {
+    // console.log("enetrd nind");
+
+    this._pnrCancelsearchButton.addEventListener("click", (event) => {
+      console.log("enetrd Cancel click");
+      event.preventDefault();
+      if (!this._pnrCancelnumber.value) {
+        alert("PNR Number can't be Null.Please enter PNR number");
+      } else if (this._pnrCancelnumber.value.length !== 10) {
+        alert("Please enter valid  9 digit PNR number");
+      } else {
+        handler(this._pnrCancelnumber.value.trimStart().trimEnd());
+        this._pnrCancelnumber.value = "";
+      }
+    });
+  }
+  getModelpnrCancelElements() {
+    this._overlay2 = document.querySelectorAll(".overlay");
+    this._openButtonCancel2 = document.querySelectorAll(
+      "#form__btn--Cancel-PNR"
+    );
+    this._closeButtonpnrCancel = document.querySelectorAll(".close-modal1");
+    this._modalPNRCancel = document.querySelector(".modal3");
+    this._PNRNumber = document.querySelector(".PNR-no1");
+    this._PNRTrainNameNumber = document.querySelector(".PNR-Train-name1");
+    this._PNRSource = document.querySelector(".PNR-source1");
+    this._PNRDestination = document.querySelector(".PNR-destination1");
+    this._PNRDateofjourneyTime = document.querySelector(".PNR-dateofjourney1");
+  }
+
+  bindModelWindowpnrCancel(pnrnumberFoundlist) {
+    let temp;
+    this.getModelpnrCancelElements();
+    this._overlay2[1].classList.remove("hidden2");
+    console.log(pnrnumberFoundlist, typeof pnrnumberFoundlist);
+
+    this._PNRNumber.textContent = pnrnumberFoundlist[0].pnrnumber;
+    console.log(this._PNRNumber.textContent);
+    this._PNRTrainNameNumber.textContent = pnrnumberFoundlist[0].trainname;
+    this._PNRSource.textContent = pnrnumberFoundlist[0].source;
+    this._PNRDestination.textContent = pnrnumberFoundlist[0].destination;
+    this._PNRDateofjourneyTime.textContent =
+      pnrnumberFoundlist[0].sourcedatetime;
+    document.querySelector(".table-body-cancel").innerHTML = "";
+    pnrnumberFoundlist.forEach((ele, index) => {
+      if (ele.passengerstatus === "WL") {
+        ele.passengerseat = "NA";
+        ele.passengerstatus = ele.passengerseatnumber;
+        ele.passengerseatnumber = "NA";
+      }
+
+      const html = `<tr class= "test${index + 1}">
+      
+              <td><input class="checked hidden" type="checkbox"/>Passenger-${
+                index + 1
+              }</td>
+              <td class="Pname">${ele.passengername}</td>
+              <td>${ele.passengerage}</td>
+              <td>${ele.passengergender}</td>
+              <td class="status">${ele.passengerstatus}</td>
+              <td>${ele.passengerseat}</td>
+              <td>${ele.passengerseatnumber}</td>
+            </tr>`;
+      document
+        .querySelector(".table-body-cancel")
+        .insertAdjacentHTML("beforeend", html);
+        if(ele.passengerstatus!=="Cancelled"){
+          document.querySelectorAll(".checked").classList.remove("hidden");
+        }
+    });
+    this._modalPNRCancel.classList.remove("hidden2");
+    this.bindCheckedPassengerData(pnrnumberFoundlist[0].pnrnumber);
+  }
+
+  bindCheckedPassengerData(pnrnumber) {
+    this._pnrnumberCancel = pnrnumber;
+    document.querySelectorAll(".checked").forEach((ele, index) => {
+      ele.addEventListener("change", (e) => {
+        //e.preventDefault();
+        if (e.target.checked) {
+          const getSiblings = (node) =>
+            [...node.children].filter((c) => c !== node);
+          const siblingsToC = getSiblings(
+            document.querySelector(`.test${index + 1}`)
+          );
+          console.log(siblingsToC);
+          this._CancelName= siblingsToC[1].textContent;
+          this._CancelStatus = siblingsToC[4].textContent;
+          this._CancelBerth = siblingsToC[5].textContent;
+          this._CancelSeatNo = siblingsToC[6].textContent;
+        }
+      });
+    });
+  }
+
+  bindConfirmCancel(handler) {
+    let status = false;
+    document.querySelector(".btn_confirm").addEventListener("click", (e) => {
+      e.preventDefault();
+      this._cancelconformStatus = true;
+      console.log("Confirmed");
+      this._CancelStatus = "Cancelled";
+      this._CancelBerth = "NA";
+      this._CancelSeatNo = "NA";
+      this._modalPNRCancel.classList.add("hidden2");
+      this._overlay2[1].classList.add("hidden2");
+      console.log(this._CancelName);
+      handler(
+        this._pnrnumberCancel,
+        this._CancelBerth,
+        this._CancelName,
+        this._CancelSeatNo,
+        this._CancelStatus
+      );
+    });
+  }
+  bindModelPNRCancelWindowClose() {
+    this.getModelpnrCancelElements();
+    this._closeButtonpnrCancel[2].addEventListener("click", (event) => {
+      event.preventDefault();
+      this._modalPNRCancel.classList.add("hidden2");
+      this._overlay2[1].classList.add("hidden2");
     });
   }
 }

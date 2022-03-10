@@ -484,19 +484,6 @@ h4.PNR-status-details {
 
 .hidden2 {
   display: none;
-  /* display: block;  */
-}
-
-.modal3 {
-  max-width: auto;
-  height: 60%;
-}
-
-/*MODEL WINDOW 3- CANCELLATION*/
-/*************************/
-
-.hidden2 {
-  display: none;
   /* display: block; */
 }
 
