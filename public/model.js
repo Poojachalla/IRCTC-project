@@ -358,59 +358,6 @@ class Model {
     const content = await rawResponse.json();
   }
 
-  async saveDataToJSON(
-    ele,
-    pnrnumber,
-    traindata,
-    newStatus,
-    berthtype,
-    seatNo
-  ) {
-    const rawResponse = await fetch("/bookedpassengersdata", {
-      method: "POST",
-      body: JSON.stringify({
-        pnrnumber2: pnrnumber,
-        // trainname: traindata[0],
-        // source: traindata[1],
-        // sourcedatetime: traindata[2],
-        // destination: traindata[3],
-        // destinationdatetime: traindata[4],
-        //  passengername: ele[0],
-        // passengerage: ele[1],
-        // passengergender: ele[2],
-        passengerseat: ele[3],
-        passengerstatus: ele[5],
-        passengerseatnumber: ele[6],
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const content = await rawResponse.json();
-  }
-
-  async setEditModal(pnrnumber) {
-    // Get information about the book using isbn
-    const req = await fetch(
-      `http://localhost:5000/bookedpassengersdata/${pnrnumber}`
-    );
-    this._FoundPnrCancel = await req.json();
-    //console.log(this._FoundPnr);
-    return this._FoundPnrCancel;
-  }
-
-  async getstoreDataOfBookedTicketIntoDataBase(pnrnumber) {
-    let status = false; //To check if pnr number  is found are not false=NOT found
-    let pnrfound2 = await this.setEditModal(pnrnumber);
-    //console.log(pnrfound1);
-    if (pnrfound2.length === 0) {
-      status = false;
-    } else {
-      status = true;
-    }
-    return [pnrfound2, status];
-  }
 }
 
 export default new Model();
