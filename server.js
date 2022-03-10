@@ -63,6 +63,37 @@ app.get("/bookedpassengersdata/:pnrnumber", (req, res) => {
   );
 });
 
+app.put("/bookedpassengersdata/:pnrnumberCancel", (req, res) => {
+  const newBooking = {
+    pnrnumber:req.body.pnrnumber,
+    passengerseat:req.body.CancelBerth,
+    passengername:req.body.CancelName,
+    passengerseatnumber:req.body.CancelSeatNo,
+    passengerstatus:req.body.CancelStatus
+  };
+
+  let sql="UPDATE booked_passengerdetails SET passengerseat='"+req.body.CancelBerth+"', passengerseatnumber='"+req.body.CancelSeatNo+ "', passengerstatus='"+req.body.CancelStatus+ "' WHERE pnrnumber='"+req.body.pnrnumber+"' AND passengername='"+req.body.CancelName+"'";
+  
+  //let sql ="UPDATE booked_passengerdetails WHERE pnrnumber=? AND passengername=?",[pnrnumber,passengername];
+  let query = connection.query(sql,(err, results) => {
+    if (err) throw err;
+    res.send(JSON.stringify(results));
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+//JSON updation
 const trainsData = JSON.parse(fs.readFileSync("./public/trainList.json"));
 // let users = [];
 const saveData = (data, file) => {
