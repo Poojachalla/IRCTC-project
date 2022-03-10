@@ -561,15 +561,13 @@ class View {
   //Cancellation
 
   bindpnrCancelsearch(handler) {
-    // console.log("enetrd nind");
-
-    this._pnrCancelsearchButton.addEventListener("click", (event) => {
+      this._pnrCancelsearchButton.addEventListener("click", (event) => {
       console.log("enetrd Cancel click");
       event.preventDefault();
       if (!this._pnrCancelnumber.value) {
         alert("PNR Number can't be Null.Please enter PNR number");
       } else if (this._pnrCancelnumber.value.length !== 10) {
-        alert("Please enter valid  9 digit PNR number");
+        alert("Please enter valid 10 digit PNR number");
       } else {
         handler(this._pnrCancelnumber.value.trimStart().trimEnd());
         this._pnrCancelnumber.value = "";
@@ -591,13 +589,12 @@ class View {
   }
 
   bindModelWindowpnrCancel(pnrnumberFoundlist) {
-    let temp;
     this.getModelpnrCancelElements();
     this._overlay2[1].classList.remove("hidden2");
     console.log(pnrnumberFoundlist, typeof pnrnumberFoundlist);
 
     this._PNRNumber.textContent = pnrnumberFoundlist[0].pnrnumber;
-    console.log(this._PNRNumber.textContent);
+    //console.log(this._PNRNumber.textContent);
     this._PNRTrainNameNumber.textContent = pnrnumberFoundlist[0].trainname;
     this._PNRSource.textContent = pnrnumberFoundlist[0].source;
     this._PNRDestination.textContent = pnrnumberFoundlist[0].destination;
@@ -612,7 +609,6 @@ class View {
       }
 
       const html = `<tr class= "test${index + 1}">
-      
               <td><input class="checked hidden" type="checkbox"/> Passenger-${
                 index + 1
               }</td>
