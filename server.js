@@ -7,6 +7,8 @@ var mysql = require("mysql");
 const PORT = 5000;
 app.listen(PORT, () => console.log(`listening at http://localhost:${PORT}`));
 
+//To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in
+//middleware function in Express.
 app.use(express.static("public")); //To link index.html file
 app.use(express.json());
 
@@ -60,69 +62,32 @@ app.get("/bookedpassengersdata/:pnrnumber", (req, res) => {
     }
   );
 });
-//show all users
-/* app.get("/login", (req, res) => {
-  let sql = "SELECT * FROM user_details";
-  let query = connection.query(sql, (err, results) => {
-    if (err) throw err;
-    res.send(JSON.stringify(results));
-  });
-});
 
-//show single user
-app.get("/login/:name", (req, res) => {
-  connection.query(
-    "select * from user_details where name=?",
-    [req.params.name],
-    function (error, results, fields) {
-      if (error) throw error;
-      res.end(JSON.stringify(results));
-    }
-  );
-}); */
-
-/* const userData = JSON.parse(fs.readFileSync("BookingDetails.json"));
+const trainsData = JSON.parse(fs.readFileSync("./public/trainList.json"));
 // let users = [];
-app.post("/bookedpassengersdata", (req, res) => {
-  const newUser = {
-    pnrnumber: req.body.pnrnumber,
-    trainname: req.body.trainname,
-    source: req.body.source,
-    sourcedatetime: req.body.sourcedatetime,
-    destination: req.body.destination,
-    destinationdatetime: req.body.destinationdatetime,
-    passengers: req.body.passengers,
-  }; */
-
-//   const ourData = req.body.name;
-
-//   console.log(ourData);
-
-/* userData[newUser.pnrnumber] = newUser; //
-  //users.push(req.body);
-
-  saveData(userData, "BookingDetails.json");
-
-  res.json(`Data has been saved`);
-});
-
-//to get data
-app.get("/login", (req, res) => {
-  res.json(userData);
-});
-
-app.get("/login/:user", (req, res) => {
-  var pnrnumber = req.params.pnrnumber;
-  // Searching books for the isbn
-  for (let data of users) {
-    if (data.pnrnumber === pnrnumber) {
-      res.json(data);
+const saveData = (data, file) => {
+  const finished = (error) => {
+    if (error) {
+      console.error(error);
       return;
     }
-  }
+  };
 
-  // Sending 404 when not found something is a good practice
-  res.status(404).send("Book not found");
-  //console.log(user);
+  const jsonData = JSON.stringify(data, null, 2);
+  fs.writeFile(file, jsonData, finished);
+};
+saveData(trainsData, "./public/trainList.json");
+
+app.post("/train/:index1", (req, res) => {
+  // Reading isbn from the URL
+  const index1 = req.body.index1;
+  const index2 = req.body.index2;
+  const index3 = req.body.index3;
+  const UpdatedSeats = req.body.UpdatedSeats;
+  //console.log(trainsData, index1, index2, index3, UpdatedSeats);
+
+  trainsData[index1]["junctions"][index2]["Available_Seat"][index3] =
+    UpdatedSeats;
+  saveData(trainsData, "./public/trainList.json");
+  res.json(`${trainsData[index1].train_name} Number of seats is updated`);
 });
- */
