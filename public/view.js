@@ -573,7 +573,7 @@ class View {
 
   bindModelWindowpnrCancel(pnrnumberFoundlist) {
     this.getModelpnrCancelElements();
-    this._overlay2[1].classList.remove("hidden2");
+    this._overlay2[2].classList.remove("hidden2");
     //console.log(pnrnumberFoundlist, typeof pnrnumberFoundlist);
 
     this._PNRNumber.textContent = pnrnumberFoundlist[0].pnrnumber;
@@ -654,7 +654,7 @@ class View {
       this._CancelBerth = "NA";
       this._CancelSeatNo = "NA";
       this._modalPNRCancel.classList.add("hidden2");
-      this._overlay2[1].classList.add("hidden2");
+      this._overlay2[2].classList.add("hidden2");
       console.log(this._CancelName);
       handler(
         this._pnrnumberCancel,
@@ -670,7 +670,7 @@ class View {
     this._closeButtonpnrCancel[2].addEventListener("click", (event) => {
       event.preventDefault();
       this._modalPNRCancel.classList.add("hidden2");
-      this._overlay2[1].classList.add("hidden2");
+      this._overlay2[2].classList.add("hidden2");
     });
   }
 }
