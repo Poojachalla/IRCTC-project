@@ -1,5 +1,4 @@
-/* import "../core-js/actual";
- */
+
 /******* CLASS VIEW  ******************/
 class View {
   _trainlistElement = document.querySelector(".train-list");
@@ -18,47 +17,14 @@ class View {
   _pnrnumberCancel;
   // _trainsFoundlist;
   //_status;
+  _pnrcancelData=[];
   _pnrnumberlist;
   _passengerdetails = [];
   _trainslist;
   _helperHandler;
   _currentDate = new Date().toISOString().split("T")[0];
 
-  _places = [
-    "Anakapalle",
-    "Tirupati",
-    "Gundur",
-    "Nellore",
-    "Kavali",
-    "Ongole",
-    "Chirala",
-    "Tenali",
-    "Vijayawada",
-    "Warangal",
-    "Secunderabad",
-    "Nizamabad",
-    "Adilabad",
-    "Vishakapatnam",
-    "Rajamundry",
-    "Eluru",
-    "Hyderabad",
-    "Guntur",
-    "Chennai Central",
-    "Mahbubabad",
-    "Kazipet",
-    "Kondapalli",
-    "Khammam",
-    "Ghanpur",
-    "New Delhi",
-    "Agra Cantt",
-    "Gwalior",
-    "Bhopal",
-    "Nagpur",
-    "Chandrapur",
-    "Balharshah",
-    "Sirpur Kagazngr",
-    "Ramgundam",
-  ];
+  _places = ["Anakapalle","Tirupati","Gundur","Nellore","Kavali","Ongole","Chirala","Tenali","Vijayawada","Warangal","Secunderabad","Nizamabad","Adilabad","Vishakapatnam","Rajamundry","Eluru","Hyderabad","Guntur","Chennai Central","Mahbubabad","Kazipet","Kondapalli","Khammam","Ghanpur","New Delhi","Agra Cantt","Gwalior","Bhopal","Nagpur","Chandrapur","Balharshah","Sirpur Kagazngr","Ramgundam"];
 
   constructor() {
     this.BookTicket(this._searchButton);
@@ -327,6 +293,16 @@ class View {
         .querySelector(`.Passenger-${i + 1}`)
         .classList.remove("hidden-passenger");
     }
+    for(let i=1;i<=4;i++){
+      let val=[...document.querySelector(`.Passenger-${i}`).elements];
+      val.forEach((ele, index) =>{
+        ele.removeAttribute('readonly');
+        if(index===2 || index===3){
+        //ele.style.removeProperty('disabled');
+        ele.disabled = false;
+      }
+    });
+  }
 
     this.OnlickAddPassenger(handler);
   }
@@ -356,6 +332,9 @@ class View {
         ...document.querySelector(`.Passenger-${value}`).elements,
       ];
       //console.log(elements);
+      /* elements.forEach((ele, index) =>{
+        ele.removeAttribute('readonly');
+    }) */
       let check = true;
       elements.forEach((ele, index) => {
         if (index != elements.length - 1) {
@@ -369,7 +348,6 @@ class View {
       });
 
       if (check) {
-        //console.log("inside entered");
         this._passengerdetails.push(val);
 
         //To remove duplicates
@@ -380,6 +358,11 @@ class View {
         elements[elements.length - 1].value = "Added Passenger";
         clickElement.target.style.backgroundColor = "red";
         clickElement.target.style.pointerEvents = "none";
+        elements.forEach((ele,index) =>{
+          ele.setAttribute('readonly', true);
+          if(index===2 || index===3)
+          ele.disabled = true;
+      })
         //clickElement.target.classList.add("onClick");
 
         document.querySelector(".Confirm_Booking").classList.remove("hidden");
@@ -562,7 +545,7 @@ class View {
 
   bindpnrCancelsearch(handler) {
       this._pnrCancelsearchButton.addEventListener("click", (event) => {
-      console.log("enetrd Cancel click");
+      //console.log("enetrd Cancel click");
       event.preventDefault();
       if (!this._pnrCancelnumber.value) {
         alert("PNR Number can't be Null.Please enter PNR number");
@@ -591,7 +574,7 @@ class View {
   bindModelWindowpnrCancel(pnrnumberFoundlist) {
     this.getModelpnrCancelElements();
     this._overlay2[1].classList.remove("hidden2");
-    console.log(pnrnumberFoundlist, typeof pnrnumberFoundlist);
+    //console.log(pnrnumberFoundlist, typeof pnrnumberFoundlist);
 
     this._PNRNumber.textContent = pnrnumberFoundlist[0].pnrnumber;
     //console.log(this._PNRNumber.textContent);
@@ -641,11 +624,21 @@ class View {
           const siblingsToC = getSiblings(
             document.querySelector(`.test${index + 1}`)
           );
-          console.log(siblingsToC);
-          this._CancelName= siblingsToC[1].textContent;
-          this._CancelStatus = siblingsToC[4].textContent;
-          this._CancelBerth = siblingsToC[5].textContent;
-          this._CancelSeatNo = siblingsToC[6].textContent;
+          //console.log(siblingsToC);
+          this._CancelName.push(siblingsToC[1].textContent);
+          this._CancelStatus.push(siblingsToC[4].textContent);
+          this._CancelBerth.push(siblingsToC[5].textContent);
+          this._CancelSeatNo.push(siblingsToC[6].textContent);
+          this._CancelName=siblingsToC[1].textContent;
+          this._CancelStatus=siblingsToC[4].textContent;
+          this._CancelBerth=siblingsToC[5].textContent;
+          this._CancelSeatNo=siblingsToC[6].textContent; 
+        
+          this._pnrcancelData.push([this._pnrnumberCancel,
+            this._CancelBerth,
+            this._CancelName,
+            this._CancelSeatNo,
+            this._CancelStatus])
         }
       });
     });
