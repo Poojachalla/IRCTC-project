@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css" />
 
     <script type="module" defer src="controller.js"></script>
+
     <title>IRCTC - Railway Connect</title>
 
     <!-- FAV ICON -->
@@ -26,48 +27,14 @@
 
       <!-- MOVEMENTS -->
       <div class="train-list">
-        <div class="movements__row">
-          <div class="movements__type movements__type--train">
-            Train-Name(Train-number)
-          </div>
-          <div class="train-details">
-            <div class="train-stations">
-              <span class="train-time-source">NZM</span>
-              <span class="icon"
-                ><img
-                  alt="arrow"
-                  src="https://www.confirmtkt.com/img/icons/grey.svg"
-                  width="20px"
-              /></span>
-              <span class="duration">19h 45m</span>
-              <span class="icon"
-                ><img
-                  alt="arrow"
-                  src="https://www.confirmtkt.com/img/icons/grey.svg"
-                  width="20px"
-              /></span>
-              <span class="train-time-destination">MMCT</span>
-              <br />
-            </div>
-
-            <div class="train-dates">
-              <span class="Train-Start-date">
-                <span class="train-timings">04:00</span> Thu Mar 3 2022</span
-              >
-              <span class="Train-End-date">
-                <span class="train-timings">23:45</span> Thu Mar 3 2022</span
-              >
-            </div>
-            <br />
-            <div class="Available-seats">Available Seats:16</div>
-          </div>
+        <div class="init-window">
+          <img src="./images/logo.png" alt=" logo" />
+          <p class="Booking_done">
+            Search Trains <br />
+            🚇🚇🚇
+          </p>
         </div>
       </div>
-
-      <!-- SUMMARY -->
-      <!-- <div class="summary">
-        <button class="btn--sort">&downarrow; SORT</button>
-      </div>-->
 
       <!-- OPERATION: Booking Ticket -->
       <div class="operation operation--transfer">
@@ -349,7 +316,8 @@
         />
       </div>
       <div class="Booking_done hidden">
-        Successfully Booked the tickets 🎫🎫🎫<br />
+        Successfully Booked the tickets 🎫🎫🎫<br /><br />
+        <!-- <button class="PNR"></button> -->
         <span class="PNR"></span>
       </div>
     </div>
@@ -392,26 +360,7 @@
                 <th>Seat Number</th>
               </tr>
             </thead>
-            <tbody class="table-body">
-              <!--  <tr>
-                <td>passenger-1</td>
-                <td>Swapna</td>
-                <td>22</td>
-                <td>F</td>
-                <td>Confirmed</td>
-                <td>Upper</td>
-                <td>52</td>
-              </tr>
-              <tr>
-                <td>passenger-2</td>
-                <td>Pooja</td>
-                <td>22</td>
-                <td>F</td>
-                <td>Confirmed</td>
-                <td>Lower</td>
-                <td>67</td>
-              </tr> -->
-            </tbody>
+            <tbody class="table-body"></tbody>
           </table>
         </div>
       </div>
@@ -453,44 +402,7 @@
                 <th>Seat Number</th>
               </tr>
             </thead>
-            <tbody class="table-body-cancel">
-              <!-- <tr>
-                  <td>passenger-1</td>
-                  <td>Swapna</td>
-                  <td>22</td>
-                  <td>F</td>
-                  <td>Confirmed</td>
-                  <td>Upper</td>
-                  <td>52</td>
-                </tr>
-                <tr>
-                  <td>passenger-2</td>
-                  <td>Pooja</td>
-                  <td>22</td>
-                  <td>F</td>
-                  <td>Confirmed</td>
-                  <td>Lower</td>
-                  <td>67</td>
-                </tr> -->
-              <!-- <tr>
-                  <td>passenger-3</td>
-                  <td>Priya</td>
-                  <td>18</td>
-                  <td>F</td>
-                  <td>Confirmed</td>
-                  <td>window-side-lower</td>
-                  <td>67</td>
-                </tr>
-                <tr>
-                  <td>passenger-4</td>
-                  <td>Rosy linkon</td>
-                  <td>29</td>
-                  <td>M</td>
-                  <td>Cancelled</td>
-                  <td>--NA--</td>
-                  <td>--NA--</td>
-                </tr> -->
-            </tbody>
+            <tbody class="table-body-cancel"></tbody>
           </table>
         </div>
       </div>
@@ -502,15 +414,15 @@
           <div class="panel-body">
             <hr />
             <p>
-              e-Tickets can be cancelled on Internet at this website till Chart preparation of the train .Cancellations are not allowed at face to face Railway Counters. If the user wishes to cancel his e-Ticket, he can do so till the time of chart preparation for the train.
+              e-Tickets can be cancelled on Internet at this website till Chart
+              preparation of the train .Cancellations are not allowed at face to
+              face Railway Counters. If the user wishes to cancel his e-Ticket,
+              he can do so till the time of chart preparation for the train.
             </p>
             <br />
           </div>
           <div class="panel-footer">
             <form class="form">
-              <!-- <label class="checkbox-inline">
-                <input type="checkbox" />agree to Cancellation of tickets
-              </label> -->
               <div>
                 <button type="submit" class="btn_confirm">confirm</button>
               </div>
@@ -519,9 +431,6 @@
         </div>
       </div>
     </div>
-
     <div class="overlay hidden2"></div>
-
-    <!-- Linking JS file -->
   </body>
 </html>

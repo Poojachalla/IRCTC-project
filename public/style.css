@@ -51,21 +51,28 @@ nav {
   max-width: 100rem;
   margin: 4rem auto;
   display: grid;
-  grid-template-columns: 4fr 3fr;
+  /* grid-template-columns: 4fr 3fr; */
   grid-template-rows: auto repeat(3, 15rem) auto;
   gap: 2rem;
 
   /* NOTE This creates the fade in/out animation */
   opacity: 1;
   transition: all 1s;
+
+  /* CHANGE */
+  grid-template-columns: 3fr 4fr;
 }
 
 .scroll-content {
   grid-column: 1 / span 2;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-bottom: 2rem;
+
+  /* CHANGE */
+  justify-content: center;
+  flex-wrap: nowrap;
 }
 
 .scroll-content marquee {
@@ -79,6 +86,7 @@ nav {
 /* MOVEMENTS */
 .train-list {
   grid-row: 2 / span 3;
+  grid-column: 2;
   background-color: #fff;
   border-radius: 1rem;
   overflow: scroll;
@@ -224,7 +232,8 @@ nav {
 }
 
 .operation--close {
-  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+  /* background-image: linear-gradient(to top left, #e52a5a, #ff585f); */
+  background-image: linear-gradient(to top left, #1083f9, #29e6df);
 }
 
 h2 {
@@ -262,6 +271,27 @@ h2 {
 .form__input:focus {
   outline: none;
   background-color: rgba(255, 255, 255, 0.6);
+}
+
+.PNR {
+  width: 40%;
+  border: none;
+  font-family: inherit;
+  /* font-size: 1.5rem; */
+  text-align: center;
+  color: #333;
+  padding: 0.3rem 1rem;
+  border-radius: 0.7rem;
+  transition: all 0.3s;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: inline-block;
+}
+
+.PNR:focus,
+.PNR:hover {
+  outline: dotted;
+  /* outline: groove; */
+  background-color: #34f1c885;
 }
 /* 
   .form__label {
@@ -364,11 +394,17 @@ h2 {
 .passenger-birthType,
 .passengers-number,
 .passenger-phoneNumber {
-  width: 70%;
-  padding: 6px 12px;
-  margin: 15px 0;
+  /* width: 70%; */
+  /* padding: 6px 12px; */
+  /* margin: 15px 0; */
   box-sizing: border-box;
   cursor: pointer;
+
+  /* CHANGES */
+  width: 80%;
+  padding: 6px 15px;
+  margin: 12px 12px 12px 90px;
+  border-radius: 5px;
 }
 
 .passenger-label {
@@ -384,6 +420,9 @@ h2 {
   box-sizing: border-box;
   background-color: rgb(20, 117, 207);
   cursor: pointer;
+
+  /* CHANGE */
+  border-radius: 12px;
 }
 
 .Confirm_Booking {
@@ -392,6 +431,7 @@ h2 {
 
 .Booking_done {
   color: red;
+  font-weight: 600;
   text-align: center;
   font-size: 20px;
 }
@@ -431,14 +471,21 @@ h3 {
 }
 
 h4.PNR-status-details {
-  width: 85%;
-  padding: 4px 12px;
-  margin: 8px 0;
+  /* width: 85%; */
+  /* padding: 4px 12px; */
+  /* margin: 8px 0; */
   box-sizing: border-box;
   font-size: 14px;
   background-color: rgb(245, 245, 245);
   outline: 1px solid rgb(31, 31, 31);
   color: black;
+  /* margin: 8px 35px; */
+
+  /* CHANGES*/
+  outline: 1px dotted #bfbfda;
+  width: 90%;
+  padding: 5px 12px;
+  margin: 5px 30px;
 }
 
 .table-wrapper {
@@ -496,7 +543,8 @@ h4.PNR-status-details {
   color: #333;
   padding-top: 12px;
   border-radius: 8px;
-  margin-right: 32px;
+  /* margin-right: 32px; */
+  margin-right: 50px;
 }
 
 .modal3 .container .panel .panel-heading,
@@ -511,7 +559,8 @@ h4.PNR-status-details {
 }
 
 .modal3 .container p {
-  padding: 0px 16px;
+  /* padding: 0px 16px; */
+  padding: 8px 10px;
 }
 
 /* CONFIRM & CANCEL BUTTON */
@@ -560,3 +609,56 @@ h4.PNR-status-details {
     width: 150px;
     color: white;
   } */
+
+/** Design Part **/
+/* 
+.train-list img {
+  width: 100%;
+  height: 100%;
+} */
+
+.train-list .init-window img {
+  width: 30%;
+  height: 30%;
+  display: block;
+  margin: 40px auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+
+.train-list .init-window p {
+  font-size: 40px;
+  color: #ff5e00;
+  font-family: monospace;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(148, 12, 238);
+  border-radius: 10px;
+}
+
+/* TIME-OUR*/
+/* 
+.logout-timer {
+  padding: 2px 0.3rem;
+  margin-top: 1.9rem;
+  font-size: 1.25rem;
+  grid-column: 1 / span 2;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  justify-content: center;
+  background-color: #5bdbbfb2;
+  border-radius: 8px;
+  font-size: 14px;
+  color: rgb(43, 46, 226);
+}
+
+.logout-timer .timer {
+  font-weight: bolder;
+  margin-left: 5px;
+} */
