@@ -1,7 +1,5 @@
 import Model from "./model.js";
 import View from "./view.js";
-/* import "../regenerator-runtime/runtime";
-import "../core-js/actual"; */
 
 /**************** CLASS CONTROLLER  ******************/
 class Controller {
@@ -13,7 +11,6 @@ class Controller {
     this.view.AutoCompleteForFromANDTo();
     this.view.setDatefieldInBookingSection();
     this.view.bindSearchTrainsButton(this.handleSearchTrains);
-    //console.log("LAST");
     //this.view.bindpnrsearch(this.handlepnrsearch);
     this.view.bindpnrsearch(this.handlepnrsearch);
     this.view.bindpnrCancelsearch(this.handlepnrsearchCancel);
@@ -24,7 +21,7 @@ class Controller {
     //Check if Click action call done for inside events of modal1 Window
     this.view.bindSelectPassengers(this.handleSelectPassengers);
   }
-
+  
   handleSearchTrains = (source, destination, date) => {
     [this._trainsFoundlist, this.status] = [
       ...this.model.getTrainsDetails(source, destination, date),
@@ -36,6 +33,7 @@ class Controller {
       this.view.removeTrainDetailsMovements();
     } else {
       this.view.displayMovements(this._trainsFoundlist);
+
     }
 
     /* //For trains that are departed and trains that have <4 hr to reach the station
@@ -153,12 +151,6 @@ class Controller {
       this.view._pnrCancelnumber.value = "";
     } else {
       this.view.bindModelWindowpnrCancel(this._pnrnumberlist);
-      //[this.Pnr, ...this.PassengerCancelData] = this.view.bindConfirmCancel();
-      /* console.log(this.view.bindConfirmCancel()); */
-      // this.model.storeDataOfCancelledTicketIntoDataBase(this.PassengerCancelData, this.Pnr);
-      //storeDataOfCancelledTicketIntoDataBase
-      /* this.view.bindConfirmCancel(this.getCancelPassengerData()); */
-      //console.log(this.view.getCancelPassengerData());
     }
     this.view.bindModelPNRCancelWindowClose();
   };

@@ -13,6 +13,7 @@ class Model {
   _FoundPnrCancel = "";
   constructor() {
     //this.sql = sql;
+    //setInterval(this.getJSONData.bind(this),1000);
     this.getJSONData();
   }
 
@@ -59,7 +60,6 @@ class Model {
       item["junctions"].map((res, i) => res["Available_Seat"])
     );
     //console.log(this._trainAvlSeats);
-
   }
 
   getTrainStartAndEndDateAvailableSeats(i1, i2, i3, dateIndex) {
@@ -185,6 +185,7 @@ class Model {
   }
 
   getTrainsDetails(source, destination, date) {
+    setInterval(this.searchTrain(source, destination, date),1000);
     return this.searchTrain(source, destination, date);
   }
 
