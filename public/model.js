@@ -1,5 +1,4 @@
-/* import { async } from "regenerator-runtime"; */
-import * as data from "./trainList.json" assert { type: "json" };
+//import * as data from "./trainList.json" assert { type: "json" };
 class Model {
   _trainsDetails = "";
   _trainJunctions = "";
@@ -33,16 +32,15 @@ class Model {
       item["junctions"].map((res) => res["Date"])
     ); //returns array of junctions dates of all trains
 
-    console.log(this._trainDates);
+    //console.log(this._trainDates);
   }
 
   getJunctionsStations() {
     this._trainStations = this._trainsDetails.map((item, index) =>
       item["junctions"].map((res, i) => res[`Station-${i + 1}`])
     ); //returns array of junctions stations of all trains
-    console.log(this._trainStations);
+    //console.log(this._trainStations);
 
-    /* console.log(this.getJunctionStationsByIndex(3, 5)); */
   }
 
   getJunctionStationsByIndex(index1, index2) {
@@ -53,17 +51,15 @@ class Model {
     this._trainTime = this._trainsDetails.map((item, index) =>
       item["junctions"].map((res, i) => res["Time"])
     );
-    console.log(this._trainTime); //returns array of junctions stations of all trains
+   // console.log(this._trainTime); //returns array of junctions stations of all trains
   }
 
   getJunctionsAvlSeats() {
     this._trainAvlSeats = this._trainsDetails.map((item, index) =>
       item["junctions"].map((res, i) => res["Available_Seat"])
     );
-    console.log(this._trainAvlSeats);
+    //console.log(this._trainAvlSeats);
 
-    //testing
-    //this.searchTrain("Vijayawada", "Secundrabad", "2022-03-02");
   }
 
   getTrainStartAndEndDateAvailableSeats(i1, i2, i3, dateIndex) {
@@ -189,17 +185,20 @@ class Model {
   }
 
   getTrainsDetails(source, destination, date) {
-    //console.log(this._trainsDetails[0]["junctions"]);
     return this.searchTrain(source, destination, date);
   }
 
-  getJSONData() {
+  async getJSONData() {
     /* const res = await fetch(JSON);
       const data = await res.json(); */
     /* this._trainsDetails = JSON.stringify(data); */
-    this._trainsDetails = data.default; //default store contains complete JSON data in array of objects format
+    //this._trainsDetails = this._trainsDetails; //default store contains complete JSON data in array of objects format
     //console.log(data);
-    console.log(data.default);
+
+    const req = await fetch(`http://localhost:4500/trainsDetails`);
+    this._trainsDetails=await req.json();
+
+    console.log(this._trainsDetails);
     this.getJunctions();
     this.getJunctionsDates();
     this.getJunctionsStations();
@@ -208,11 +207,13 @@ class Model {
   }
 
   updateJSONWithUpdatedAvailableSeats(traindata, UpdatedSeats) {
-    for (let i = 0; i < data.default.length; i++) {
-      if (data.default[i].train_name === traindata[0].split("(")[0].trimEnd()) {
-        //console.log("entered1");
-        // console.log(this._trainsDetails[i]["junctions"], traindata[1]);
-        data.default[i]["junctions"].forEach((s, k) => {
+    console.log(traindata,UpdatedSeats);
+    let trainName=traindata[0].split("(")[0].trimEnd();
+    let station =traindata[1];
+    let date=new Date(traindata[2].slice(8));
+    for (let i = 0; i < this._trainsDetails.length; i++) {
+      if (this._trainsDetails[i].train_name === traindata[0].split("(")[0].trimEnd()) {
+        this._trainsDetails[i]["junctions"].forEach((s, k) => {
           if (s[`Station-${k + 1}`] === traindata[1]) {
             //console.log("entered2");
             let d = new Date(traindata[2].slice(8));
@@ -221,22 +222,19 @@ class Model {
               .split("T")[0];
             s["Date"].forEach(async (d, j) => {
               if (d === date) {
-                /* console.log(
-                  "entered3",
-                  data.default[i]["junctions"][k]["Available_Seat"][j]
-                ); */
                 let place =
-                  data.default[i]["junctions"][k]["Available_Seat"][j];
-                data.default[i]["junctions"][k]["Available_Seat"][j] =
-                  UpdatedSeats;
-                const rawResponse = await fetch(`/train/${i}`, {
+                  this._trainsDetails[i]["junctions"][k]["Available_Seat"][j];
+                //this._trainsDetails[i]["junctions"][k]["Available_Seat"][j] = UpdatedSeats;
+                //console.log(i,k,j,place,traindata[2].slice(0,8));
+                const rawResponse = await fetch(`/trainsDetails/${trainName}`, {
                   method: "POST",
 
                   body: JSON.stringify({
-                    index1: i,
-                    index2: k,
-                    index3: j,
+                    trainName:traindata[0].split("(")[0].trimEnd(),
+                    StationIndex: k,
+                    dateIndex:j,
                     UpdatedSeats: UpdatedSeats,
+                    time:traindata[2].slice(0,8)
                   }),
 
                   headers: {
@@ -245,7 +243,6 @@ class Model {
                 });
 
                 const content = await rawResponse.json();
-                //console.log(UpdatedSeats, data);
               }
             });
           }
@@ -257,28 +254,25 @@ class Model {
   storeDataOfBookedTicketIntoDataBase(BookedPassengersdata) {
     //console.log(BookedPassengersdata); //this contains booked passengers information
     let passengerdetails = [];
-    //this.sql.SendingDataIntotable(BookedPassengersdata);
-    //let train_data = BookedPassengersdata.pop();
     let [pnr_number] = BookedPassengersdata.splice(-2, 1);
-    //console.log(pnr_number, BookedPassengersdata);
     BookedPassengersdata.forEach((el, index) => {
       if (index != BookedPassengersdata.length - 1) {
-        // this.saveDataToJSON(el);
-        //console.log(el);
         passengerdetails.push(el);
       }
     });
+    this.sendBookedTrainDataToDatabase(pnr_number,BookedPassengersdata[BookedPassengersdata.length - 1]);
     passengerdetails.forEach((ele, index) => {
-      this.saveDataToJSON(
+      this.sendBookedPassengerDataToDatabase(
         ele,
         pnr_number,
-        BookedPassengersdata[BookedPassengersdata.length - 1]
       );
     });
   }
 
-  async saveDataToJSON(ele, pnrnumber, traindata) {
-    const rawResponse = await fetch("/bookedpassengersdata", {
+
+  //To send Booked TrainData into Database
+  async sendBookedTrainDataToDatabase(pnrnumber, traindata) {
+    const rawResponse = await fetch("/bookedTraindata", {
       method: "POST",
       body: JSON.stringify({
         pnrnumber1: pnrnumber,
@@ -287,6 +281,21 @@ class Model {
         sourcedatetime: traindata[2],
         destination: traindata[3],
         destinationdatetime: traindata[4],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const content = await rawResponse.json();
+  }
+    
+    //To send Booked paasenger Data into Database
+    async sendBookedPassengerDataToDatabase(ele, pnrnumber) {
+    const rawResponse = await fetch("/bookedpassengersdata", {
+      method: "POST",
+      body: JSON.stringify({
+        pnrnumber1: pnrnumber,
         passengername: ele[0],
         passengerage: ele[1],
         passengergender: ele[2],
@@ -303,9 +312,9 @@ class Model {
   }
 
   async setEditModal(pnrnumber) {
-    // Get information about the book using isbn
+    // Get information about the booking using PNR Number
     const req = await fetch(
-      `http://localhost:5000/bookedpassengersdata/${pnrnumber}`
+      `http://localhost:4500/bookedpassengersdata/${pnrnumber}`
     );
     this._FoundPnr = await req.json();
     //console.log(this._FoundPnr);
@@ -331,15 +340,14 @@ class Model {
     CancelName,
     CancelSeatNo,
     CancelStatus) {
-    let passengerdetails = [];
-    console.log(pnrnumberCancel,
+    /* console.log(pnrnumberCancel,
       CancelBerth,
       CancelName,
       CancelSeatNo,
-      CancelStatus);
+      CancelStatus); */
 
     const rawResponse = await fetch(
-      `http://localhost:5000/bookedpassengersdata/${pnrnumberCancel}`,
+      `http://localhost:4500/bookedpassengersdata/${pnrnumberCancel}`,
       {
         method: "PUT",
         body: JSON.stringify({
