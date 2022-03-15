@@ -185,7 +185,7 @@ class Model {
   }
 
   getTrainsDetails(source, destination, date) {
-    setInterval(this.searchTrain(source, destination, date),1000);
+   // setInterval(this.searchTrain(source, destination, date),1000);
     return this.searchTrain(source, destination, date);
   }
 
