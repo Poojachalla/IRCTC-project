@@ -5,16 +5,16 @@ import View from "./view.js";
 class Controller {
   _updatedAvailableSeats;
   _trainBookedDetails;
+  _myInterval;
   constructor(model, view) {
-    this.model = model;
-    this.view = view;
-    this.view.AutoCompleteForFromANDTo();
-    this.view.setDatefieldInBookingSection();
-    this.view.bindSearchTrainsButton(this.handleSearchTrains);
-    //this.view.bindpnrsearch(this.handlepnrsearch);
-    this.view.bindpnrsearch(this.handlepnrsearch);
-    this.view.bindpnrCancelsearch(this.handlepnrsearchCancel);
-    this.view.bindConfirmCancel(this.getCancelPassengerData);
+    this.model = model;                                           //Model class object
+    this.view = view;                                             //View calss object
+    this.view.AutoCompleteForFromANDTo();                         //Method for autoComplete feature 
+    this.view.setDatefieldInBookingSection();                     //Setting calender element min and value fields to current date
+    this.view.bindSearchTrainsButton(this.handleSearchTrains);    //To handle click operation on search trains button 
+    this.view.bindpnrsearch(this.handlepnrsearch);                //To handle click operation on pnr search button 
+    this.view.bindpnrCancelsearch(this.handlepnrsearchCancel);    //To handle click operation on pnr cancel button
+    this.view.bindConfirmCancel(this.getCancelPassengerData);     //To handle click operation on confirm cancel button
   }
 
   init() {
@@ -22,11 +22,12 @@ class Controller {
     this.view.bindSelectPassengers(this.handleSelectPassengers);
   }
   
-  handleSearchTrains = (source, destination, date) => {
-    [this._trainsFoundlist, this.status] = [
-      ...this.model.getTrainsDetails(source, destination, date),
-    ];
 
+  //handler method for search trains button
+ handleSearchTrains = async(source, destination, date) => {
+  clearInterval(this.myInterval);
+    [this._trainsFoundlist, this.status] = await this.model.getTrainsDetails(source, destination, date);
+  
     //To check status whether trains are found or not
     if (this.status === false) {
       alert("No Trains Found");
@@ -34,25 +35,29 @@ class Controller {
     } else {
       this.view.displayMovements(this._trainsFoundlist);
 
+      //setinterval to fetch avialable seats of trains for every 10 sec 
+      this.myInterval=setInterval(async()=>{
+        [this._trainsFoundlist, this.status] = await this.model.getTrainsDetails(source, destination, date);
+        this.view.displayMovements(this._trainsFoundlist);
+        this.view.bindAvailableSeatsClick(this.handleAvailableSeatsClick);
+        this.view.bindModelWindow1Close();
+      },5000);
     }
-
-    /* //For trains that are departed and trains that have <4 hr to reach the station
-    this.view.RemoveOnclickForDepartedAndNotAvailableTrains(
-      this._trainsFoundlist
-    ); */
 
     //Click action call to open modal1 Window
     this.view.bindAvailableSeatsClick(this.handleAvailableSeatsClick);
     this.view.bindModelWindow1Close();
+
   };
 
+  //handler method for AvailableSeats button
   handleAvailableSeatsClick = (movementSelected) => {
     this._movementSelected = movementSelected;
-    /* //Check if Click action call done for inside events of modal1 Window
-      this.view.bindSelectPassengers(this.handleSelectPassengers); */
+    //Check if Click action call done for inside events of modal1 Window
     this.init();
   };
 
+  //handler method for select passengers input
   handleSelectPassengers = (value) => {
     console.log("Booked pasenger details:", value);
     //console.log("Booked train details:", this._movementSelected);
@@ -65,7 +70,7 @@ class Controller {
       this._updatedAvailableSeats
     );
 
-    //TO update avaialble seats of trains in JSON file
+    //To update avaialble seats of trains in JSON file
     this.model.updateJSONWithUpdatedAvailableSeats(
       this._trainBookedDetails,
       this._updatedAvailableSeats
@@ -73,6 +78,7 @@ class Controller {
     //this.view.bindpnrsearch(this.handlepnrsearch);
   };
 
+  //Get method to get AvailableSeats
   getAvailableSeatsNumber(movementSelected) {
     let val = movementSelected
       .querySelector(".Available-seats")
@@ -80,6 +86,7 @@ class Controller {
     return val.slice(val.indexOf(":") + 1);
   }
 
+  //To generate unique Seat Number
   generateSeatNumber(value, movementSelected) {
     let avlSeats = this.getAvailableSeatsNumber(movementSelected);
     //console.log(avlSeats);
@@ -106,6 +113,8 @@ class Controller {
     //console.log(value);
   }
 
+
+  //To generate unique 10 digit PNR number
   generateUniquePNR(value) {
     let Pnr = "";
     for (let i = 0; i < 5; i++) {
@@ -125,6 +134,8 @@ class Controller {
     console.log(value);
     this.model.storeDataOfBookedTicketIntoDataBase(value);
   }
+
+  //handler method for PNR search button
   handlepnrsearch = async (pnrnumber) => {
     [this._pnrnumberlist, this._status] =
       await this.model.getstoreDataOfBookedTicketIntoDataBase(pnrnumber);
@@ -140,7 +151,7 @@ class Controller {
     this.view.bindModelPNRWindowClose();
   };
 
-  //Cancellation
+  //handler method for PNR search cancellation button
   handlepnrsearchCancel = async (pnrnumber) => {
     [this._pnrnumberlist, this._status] =
       await this.model.getstoreDataOfBookedTicketIntoDataBase(pnrnumber);
@@ -155,6 +166,7 @@ class Controller {
     this.view.bindModelPNRCancelWindowClose();
   };
 
+  //To send cancelled passenger data to MYSQL database
   getCancelPassengerData=((
     pnrnumberCancel,
     CancelBerth,
@@ -162,13 +174,13 @@ class Controller {
     CancelSeatNo,
     CancelStatus
   )=>{
-    console.log(
+    /* console.log(
       pnrnumberCancel,
       CancelBerth,
       CancelName,
       CancelSeatNo,
       CancelStatus
-    );
+    ); */
     this.model.storeDataOfCancelledTicketIntoDataBase(pnrnumberCancel,
       CancelBerth,
       CancelName,
@@ -176,4 +188,7 @@ class Controller {
       CancelStatus)
   });
 }
+
 const app = new Controller(Model, View);
+
+//setInterval(app.handleSearchTrains(app.source, app.destination, app.date),100);

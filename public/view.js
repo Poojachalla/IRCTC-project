@@ -58,6 +58,7 @@ class View {
   displayMovements(trainslist) {
     this._trainslist = trainslist;
     this.removeTrainDetailsMovements(); //(or).textContent=0
+
     //console.log(this._trainslist);
     trainslist.forEach((mov, index) =>
       {
@@ -162,6 +163,7 @@ class View {
       } /* else if (new Date(this._date.value) < new Date()) {
         alert("please enter correct date");
       } */ else {
+
         handler(
           this._source.value.trimStart().trimEnd(),
           this._destination.value.trimStart().trimEnd(),
@@ -574,7 +576,7 @@ class View {
     });
   }
 
-  //to get PNR cancel model elements
+  //To get PNR cancel model elements
   getModelpnrCancelElements() {
     this._overlay2 = document.querySelectorAll(".overlay");
     this._openButtonCancel2 = document.querySelectorAll(
@@ -635,10 +637,6 @@ class View {
   //To get checked passenger data 
   bindCheckedPassengerData(pnrnumber) {
     this._pnrnumberCancel = pnrnumber;
-    this._CancelStatus=[];
-    this._CancelName=[];
-    this._CancelBerth=[];
-    this._CancelSeatNo=[];
     this._pnrcancelData=[];
     document.querySelectorAll(".checked").forEach((ele, index) => {
       ele.addEventListener("change", (e) => {
@@ -649,39 +647,34 @@ class View {
           let siblingsToC = getSiblings(
             document.querySelector(`.test${index + 1}`)
           );
-          //console.log(siblingsToC);
-          this._CancelName.push(siblingsToC[1].textContent);
-          this._CancelStatus.push(siblingsToC[4].textContent);
-          this._CancelBerth.push(siblingsToC[5].textContent);
-          this._CancelSeatNo.push(siblingsToC[6].textContent);
-          /* this._CancelName=siblingsToC[1].textContent;
-          this._CancelStatus=siblingsToC[4].textContent;
-          this._CancelBerth=siblingsToC[5].textContent;
-          this._CancelSeatNo=siblingsToC[6].textContent;  */
-        console.log(this._CancelName);
           this._pnrcancelData.push([this._pnrnumberCancel,
-            this._CancelBerth,
-            this._CancelName,
+            siblingsToC[5].textContent,
+            siblingsToC[1].textContent,
             this._CancelSeatNo,
-            this._CancelStatus])
+            siblingsToC[6].textContent])
+            //console.log(this._pnrcancelData);
         }
-        /* else{
-           getSiblings = (node) =>
+
+        //To remove passenger details of status checked to unchecked
+        else {
+           let getSiblings = (node) =>
             [...node.children].filter((c) => c !== node);
-           siblingsToC = getSiblings(
+           let siblingsToC = getSiblings(
             document.querySelector(`.test${index + 1}`)
           );
           this._pnrcancelData.forEach((ele,index)=>{
-            if(ele[1]===siblingsToC[1].textContent){
-
+            //console.log(ele[2],siblingsToC[1].textContent)
+            if(ele[2]===siblingsToC[1].textContent){
+              this._pnrcancelData.splice(index,index+1);   //remove the unchecked passenger details    
             }
           })
-          this._pnrcancelData.pop();
-        } */
+          //console.log(this._pnrcancelData);
+        }
       });
     });
   }
 
+  //For click operation on confirm button
   bindConfirmCancel(handler) {
     let status = false;
     document.querySelector(".btn_confirm").addEventListener("click", (e) => {
@@ -693,24 +686,14 @@ class View {
         ele[4]= "Cancelled";
         ele[1]= "NA";
         ele[3] = "NA";
-        ele[2]=ele[2][index];
         handler(...this._pnrcancelData[index]);
       })
-      /* this._CancelStatus = "Cancelled";
-      this._CancelBerth = "NA";
-      this._CancelSeatNo = "NA";*/
       this._modalPNRCancel.classList.add("hidden2");
       this._overlay2[2].classList.add("hidden2");
-      //console.log(this._CancelName);
-     /* handler(
-        this._pnrnumberCancel,
-        this._CancelBerth,
-        this._CancelName,
-        this._CancelSeatNo,
-        this._CancelStatus
-      ); */
     });
   }
+
+  //To close PNR cancellation window
   bindModelPNRCancelWindowClose() {
     this.getModelpnrCancelElements();
     this._closeButtonpnrCancel[2].addEventListener("click", (event) => {

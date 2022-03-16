@@ -1,4 +1,7 @@
-//import * as data from "./trainList.json" assert { type: "json" };
+/**
+   * Model  Class for database connection and data manipulation.
+   * @this {Object} Model instance
+   */
 class Model {
   _trainsDetails = "";
   _trainJunctions = "";
@@ -11,11 +14,7 @@ class Model {
   _bookedpassengersdetails = "";
   _FoundPnr = "";
   _FoundPnrCancel = "";
-  constructor() {
-    //this.sql = sql;
-    //setInterval(this.getJSONData.bind(this),1000);
-    this.getJSONData();
-  }
+  constructor() {}
 
   getTrainDetailsByJunctionIndex(index) {
     return this._trainsDetails[index];
@@ -25,15 +24,13 @@ class Model {
     this._trainJunctions = this._trainsDetails.map(
       (item, index) => item["junctions"]
     );
-    console.log(this._trainJunctions);
+    //console.log(this._trainJunctions);
   }
 
   getJunctionsDates() {
     this._trainDates = this._trainsDetails.map((item, index) =>
       item["junctions"].map((res) => res["Date"])
     ); //returns array of junctions dates of all trains
-
-    //console.log(this._trainDates);
   }
 
   getJunctionsStations() {
@@ -184,28 +181,19 @@ class Model {
     return [trainsFound, status];
   }
 
-  getTrainsDetails(source, destination, date) {
-   // setInterval(this.searchTrain(source, destination, date),1000);
-    return this.searchTrain(source, destination, date);
-  }
-
-  async getJSONData() {
-    /* const res = await fetch(JSON);
-      const data = await res.json(); */
-    /* this._trainsDetails = JSON.stringify(data); */
-    //this._trainsDetails = this._trainsDetails; //default store contains complete JSON data in array of objects format
-    //console.log(data);
-
+  async getTrainsDetails(source, destination, date) {
     const req = await fetch(`http://localhost:4500/trainsDetails`);
     this._trainsDetails=await req.json();
 
-    console.log(this._trainsDetails);
+    //console.log(this._trainsDetails);
     this.getJunctions();
     this.getJunctionsDates();
     this.getJunctionsStations();
     this.getJunctionsTime();
     this.getJunctionsAvlSeats();
-  }
+     return this.searchTrain(source, destination, date);
+   }
+ 
 
   updateJSONWithUpdatedAvailableSeats(traindata, UpdatedSeats) {
     console.log(traindata,UpdatedSeats);
