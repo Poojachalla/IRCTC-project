@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+
     <link rel="stylesheet" href="style.css" />
 
     <script type="module" defer src="controller.js"></script>
@@ -22,7 +25,7 @@
 
     <main class="app">
       <div class="scroll-content">
-        <marquee> Indian Railway 🚉 (IRCTC) Lifeline to the nation...</marquee>
+        <!-- <marquee> Indian Railway 🚉 (IRCTC) Lifeline to the nation...</marquee> -->
       </div>
 
       <!-- MOVEMENTS -->
@@ -86,8 +89,7 @@
             list="To"
           />
           <datalist id="To"></datalist>
-          <br />
-
+          <!-- <br> -->
           <!-- AUTOCOMPLETE END-->
 
           <input
@@ -99,6 +101,7 @@
             required=""
             onkeydown="return false"
           />
+          
           <button class="form__btn btn__search">Search Trains</button>
         </form>
       </div>
@@ -415,7 +418,7 @@
         <h4 class="PNR-status-details">
           Date of Journey: <span class="PNR-dateofjourney1">25-02-2022</span>
         </h4>
-        <div class="table-wrapper">
+        <div class="table-wrapper" style="overflow-x:auto;">
           <table class="PNR-table">
             <thead>
               <tr>
