@@ -16,47 +16,17 @@ class Model {
   _FoundPnrCancel = "";
   constructor() {}
 
-  getTrainDetailsByJunctionIndex(index) {
+/**
+ * To get train details by junction index
+ * @param {Number} index
+ * @returns {Array}
+ */
+ getTrainDetailsByJunctionIndex(index) {
     return this._trainsDetails[index];
-  }
-
-  getJunctions() {
-    this._trainJunctions = this._trainsDetails.map(
-      (item, index) => item["junctions"]
-    );
-    //console.log(this._trainJunctions);
-  }
-
-  getJunctionsDates() {
-    this._trainDates = this._trainsDetails.map((item, index) =>
-      item["junctions"].map((res) => res["Date"])
-    ); //returns array of junctions dates of all trains
-  }
-
-  getJunctionsStations() {
-    this._trainStations = this._trainsDetails.map((item, index) =>
-      item["junctions"].map((res, i) => res[`Station-${i + 1}`])
-    ); //returns array of junctions stations of all trains
-    //console.log(this._trainStations);
-
   }
 
   getJunctionStationsByIndex(index1, index2) {
     return this._trainJunctions[index1][index2];
-  }
-
-  getJunctionsTime() {
-    this._trainTime = this._trainsDetails.map((item, index) =>
-      item["junctions"].map((res, i) => res["Time"])
-    );
-   // console.log(this._trainTime); //returns array of junctions stations of all trains
-  }
-
-  getJunctionsAvlSeats() {
-    this._trainAvlSeats = this._trainsDetails.map((item, index) =>
-      item["junctions"].map((res, i) => res["Available_Seat"])
-    );
-    //console.log(this._trainAvlSeats);
   }
 
   getTrainStartAndEndDateAvailableSeats(i1, i2, i3, dateIndex) {
@@ -186,11 +156,6 @@ class Model {
     this._trainsDetails=await req.json();
 
     //console.log(this._trainsDetails);
-    this.getJunctions();
-    this.getJunctionsDates();
-    this.getJunctionsStations();
-    this.getJunctionsTime();
-    this.getJunctionsAvlSeats();
      return this.searchTrain(source, destination, date);
    }
  
