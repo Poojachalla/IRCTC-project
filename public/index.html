@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>  
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
     <link rel="stylesheet" href="style.css" />
 
@@ -24,19 +23,15 @@
     </nav>
 
     <main class="app">
-      <div class="scroll-content">
-        <!-- <marquee> Indian Railway 🚉 (IRCTC) Lifeline to the nation...</marquee> -->
-      </div>
+      <div class="scroll-content"></div>
 
       <!-- MOVEMENTS -->
-      <div class="train-list">
-        
-      </div>
-        
+      <div class="train-list"></div>
+
       <!-- OPERATION: Booking Ticket -->
-      <div class="operation operation--transfer">
+      <div class="operation operation--booking">
         <h2>Book Ticket</h2>
-        <form class="form form--transfer">
+        <form class="form form--booking">
           <!-- AUTOCOMPLETE START-->
           <input
             type="text"
@@ -60,7 +55,6 @@
             list="To"
           />
           <datalist id="To"></datalist>
-          <!-- <br> -->
           <!-- AUTOCOMPLETE END-->
 
           <input
@@ -72,13 +66,13 @@
             required=""
             onkeydown="return false"
           />
-          
+
           <button class="form__btn btn__search">Search Trains</button>
         </form>
       </div>
 
       <!-- OPERATION: PNR STATUS -->
-      <div class="operation operation--loan">
+      <div class="operation operation--PNRStatus">
         <h2>Check PNR status</h2>
         <form class="form form--PNR">
           <input
@@ -92,7 +86,7 @@
       </div>
 
       <!-- OPERATION: CANCELLATION -->
-      <div class="operation operation--close">
+      <div class="operation operation--cancellation">
         <h2>Cancellation</h2>
         <form class="form form--cancel">
           <input
@@ -106,11 +100,6 @@
           </button>
         </form>
       </div>
-
-      <!-- LOGOUT TIMER -->
-      <!-- <p class="logout-timer">
-        You will be logged out in <span class="timer">05:00</span>
-      </p> -->
     </main>
 
     <!-- BOOK_TOCKET MODEL WINDOW -->
@@ -166,7 +155,6 @@
             required=""
           />
 
-          <!-- <button type="button" class="add-passenger">Add Passenger</button> -->
           <input
             type="submit"
             value="Add Passenger"

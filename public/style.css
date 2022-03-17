@@ -19,22 +19,10 @@ html {
   box-sizing: border-box;
 }
 
-/* body {
-    font-family: "Poppins", sans-serif;
-    color: #fff;
-    background: linear-gradient(0.1turn, #3fa66d, #ebf8e1, #f69d3c);
-    height: 100vh;
-    padding: 2rem;
-  
-    /*model window*/
-/* position: relative;
-  } */
-
 body {
   font-family: "Poppins", sans-serif;
   color: #fff;
   padding: 2rem;
-  /* background-image: url(https://images.unsplash.com/photo-1568514328861-5465017e40fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=623&q=80); */
   background: linear-gradient(
       0.5turn,
       rgb(245 245 245 / 68%),
@@ -43,18 +31,9 @@ body {
     ),
     url(https://images.unsplash.com/photo-1532673492-1b3cdb05d51b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80),
     no-repeat;
-  /* background: linear-gradient(
-      0.5turn,
-      rgb(245 245 245 / 68%),
-      rgb(0 0 0 / 40%),
-      #333
-    ),
-    url(https://images.pexels.com/photos/5098043/pexels-photo-5098043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940),
-    no-repeat; */
 
   background-size: 100%;
   height: 100%;
-  /*model window*/
   position: relative;
 }
 
@@ -75,16 +54,9 @@ nav {
   position: relative;
   max-width: 100rem;
   display: grid;
-  /* margin: 4rem auto; */
-  /* grid-template-columns: 4fr 3fr; */
-  /* grid-template-rows: auto repeat(3, 15rem) auto; */
   gap: 2rem;
-
-  /* NOTE This creates the fade in/out animation */
   opacity: 1;
   transition: all 1s;
-
-  /* CHANGE */
   grid-template-columns: 3fr 4fr;
   grid-template-rows: auto repeat(auto, 15rem) auto;
   margin: 0rem auto;
@@ -94,10 +66,6 @@ nav {
   grid-column: 1 / span 2;
   display: flex;
   align-items: flex-end;
-  /* justify-content: space-between; */
-  /* margin-bottom: 2rem; */
-
-  /* CHANGE */
   justify-content: center;
   flex-wrap: nowrap;
 }
@@ -106,7 +74,6 @@ nav {
   font-size: 18px;
   font-weight: bolder;
   color: rgb(43, 46, 226);
-  /* background-color: #5bdbbfb2; */
   background-color: #f2f2f200;
   border-radius: 8px;
 }
@@ -124,12 +91,8 @@ nav {
 
 .movements__row {
   padding: 1.7rem 1.7rem;
-  /* display: flex; */
   align-items: center;
   border-bottom: 1px solid #eee;
-  /* height: 140px;
-  width: 580px; 
-  width: 540px; */
   height: auto;
   width: 100%;
 }
@@ -192,13 +155,11 @@ nav {
 
 .Train-Start-date {
   margin-left: 10px;
-  /* margin-left: 10px; */
   margin-left: 0px;
 }
 
 .Train-End-date {
   margin-left: 200px;
-  /* margin-left: 200px; */
   margin-left: 113px;
 }
 
@@ -207,14 +168,6 @@ nav {
   font-size: 14px;
   width: -webkit-fill-available;
 }
-
-/* .Train-Start-date {
-    margin-left: 10px;
-  } 
-  
-  .Train-End-date {
-    margin-left: 200px;
-  }*/
 
 .Available-seats {
   width: 180px;
@@ -230,24 +183,6 @@ nav {
 
 /* .Available-seats */
 
-/* SUMMARY */
-/* .summary {
-  grid-row: 5 / 6;
-  display: flex;
-  align-items: baseline;
-  padding: 0 0.3rem;
-  margin-top: 1rem;
-} */
-/* 
-.btn--sort {
-  margin-left: auto;
-  border: none;
-  background: none;
-  font-size: 1.3rem;
-  font-weight: 500;
-  cursor: pointer;
-} */
-
 /* OPERATIONS */
 .operation {
   border-radius: 1rem;
@@ -255,36 +190,26 @@ nav {
   color: #333;
 }
 
-.operation--transfer,
-.operation--loan,
-.operation--close {
-  /* background-color: rgb(196, 196, 223); */
-  /*background-image: linear-gradient(0.88turn, #3085d6,#073983, #000a21);*/
+.operation--booking,
+.operation--PNRStatus,
+.operation--cancellation {
   background-image: linear-gradient(0.5turn, #93dfe3, rgb(196, 196, 223));
 }
-.operation--transfer,
-.operation--loan {
-  /* background-image: linear-gradient(to top left, #ffea03, #ffb803); */
-  /* background-color: #ffffff; */
-  /* background-image: linear-gradient(to top left, #39b385, #9be15d); */
-  /* background-image: linear-gradient(to top left, #e52a5a, #ff585f); */
-  /* background-image: linear-gradient(to top left, #1083f9, #29e6df); */
+.operation--booking,
+.operation--PNRStatus {
   box-shadow: 1rem 1rem 2rem rgb(0 0 0 / 70%);
 }
 
-.operation--transfer:focus,
-.operation--transfer:hover {
-  /* box-shadow: 0rem 0rem 2rem #c36f09; */
+.operation--booking:focus,
+.operation--booking:hover {
   box-shadow: 1rem 1rem 4rem rgb(0 0 0 / 80%);
 }
-.operation--loan:focus,
-.operation--loan:hover {
-  /* box-shadow: 0rem 0rem 2rem #a7c957; */
+.operation--PNRStatus:focus,
+.operation--PNRStatus:hover {
   box-shadow: 1rem 1rem 4rem rgb(0 0 0 / 80%);
 }
-.operation--close:focus,
-.operation--close:hover {
-  /* box-shadow: 0rem 0rem 2rem #34a0a4; */
+.operation--cancellation:focus,
+.operation--cancellation:hover {
   box-shadow: 1rem 1rem 4rem rgb(0 0 0 / 80%);
 }
 
@@ -300,23 +225,15 @@ h2 {
   grid-template-columns: 2.5fr 2.5fr 0fr;
   grid-template-rows: auto auto;
   gap: 0.4rem 1rem;
-
-  /* (remove) */
   grid-template-columns: 2.5fr;
   gap: 1rem;
   position: relative;
   width: 100%;
 }
 
-/* .form.form--PNR,
-.form--cancel {
-  grid-template-columns: 2.6fr 1.7fr 0fr;
-} */
-
 .form__input {
   width: 100%;
   border: none;
-  /* background-color: rgba(255, 255, 255, 0.4); */
   font-family: inherit;
   font-size: 1.5rem;
   text-align: center;
@@ -324,9 +241,7 @@ h2 {
   padding: 0.3rem 1rem;
   border-radius: 0.7rem;
   transition: all 0.3s;
-  /* background-color: #d1d1d1; */
 
-  /* (remove) */
   margin: 1px 0px;
   padding: 4px 15px;
   text-align: left;
@@ -339,19 +254,10 @@ h2 {
 
 .form__input:focus {
   outline: none;
-  /* background-color: rgba(255, 255, 255, 0.6); */
-  /* background-color: rgba(255, 255, 255, 0.89); */
 }
-
-/* 
-  .form__label {
-    font-size: 1.3rem;
-    text-align: center;
-  } */
 
 .form__btn {
   border: none;
-  /* border-radius: 0.7rem; */
   border-radius: 1.7rem;
   font-size: 1.5rem;
   background-color: #fff;
@@ -372,7 +278,6 @@ h2 {
   width: 40%;
   border: none;
   font-family: inherit;
-  /* font-size: 1.5rem; */
   text-align: center;
   color: #333;
   padding: 0.3rem 1rem;
@@ -385,27 +290,8 @@ h2 {
 .PNR:focus,
 .PNR:hover {
   outline: dotted;
-  /* outline: groove; */
   background-color: #34f1c885;
 }
-/* 
-.form__btn:focus {
-  outline: none;
-  border: 1px solid #fffb18;
-} */
-
-/* .logout-timer {
-    padding: 0 0.3rem;
-    margin-top: 1.9rem;
-    text-align: right;
-    font-size: 1.25rem;
-  }
-  
-  .timer {
-    font-weight: 600;
-  } */
-
-/****** model window ***********/
 
 /*Book-Ticket model window- hidden class*/
 .hidden {
@@ -420,13 +306,12 @@ h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 50%;
-  /* background-color: rgb(196, 196, 223); */
   background-image: linear-gradient(0.5turn, #93dfe3, #c4c4df 50%);
   padding: 5rem;
   border-radius: 5px;
   box-shadow: 0 3rem 5rem rgb(0 0 0 / 30%);
   z-index: 10;
-  height: auto; /*500px;*/
+  height: auto;
 }
 
 .overlay {
@@ -451,23 +336,13 @@ h2 {
   background: none;
 }
 
-/* h3 {
-    font-size: 3rem;
-    font-weight: 600;
-    color: #333;
-    text-align: center;
-  } */
-
 .passengers {
   max-width: 600px;
   padding: 20px 12px 10px 0px;
   font: 13px Arial, Helvetica, sans-serif;
   border-color: black;
-  /* outline: 2px solid #000; */
-  height: auto; /* 400px */
-  /* background-color: rgb(196, 196, 223); */
+  height: auto;
   border-collapse: collapse;
-  /* border: 1px solid #000000; */
 }
 .passenger-name,
 .passenger-age,
@@ -475,13 +350,8 @@ h2 {
 .passenger-birthType,
 .passengers-number,
 .passenger-phoneNumber {
-  /* width: 70%; */
-  /* padding: 6px 12px; */
-  /* margin: 15px 0; */
   box-sizing: border-box;
   cursor: pointer;
-
-  /* CHANGES */
   width: 80%;
   padding: 6px 15px;
   margin: 12px 12px 12px 90px;
@@ -494,6 +364,7 @@ h2 {
   color: #333;
   margin-top: 30px;
 }
+
 .add-passenger,
 .Confirm_Booking {
   width: 30%;
@@ -501,8 +372,6 @@ h2 {
   box-sizing: border-box;
   background-color: rgb(20 117 207);
   cursor: pointer;
-
-  /* CHANGE */
   border-radius: 12px;
   pointer-events: auto;
   text-shadow: 0 0 black;
@@ -514,7 +383,6 @@ h2 {
 }
 
 .Booking_done {
-  /* color: red; */
   color: rgb(43 46 226);
   font-weight: 600;
   text-align: center;
@@ -556,17 +424,11 @@ h3 {
 }
 
 h4.PNR-status-details {
-  /* width: 85%; */
-  /* padding: 4px 12px; */
-  /* margin: 8px 0; */
   box-sizing: border-box;
   font-size: 14px;
   background-color: rgb(245, 245, 245);
   outline: 1px solid rgb(31, 31, 31);
   color: black;
-  /* margin: 8px 35px; */
-
-  /* CHANGES*/
   outline: 1px dotted #bfbfda;
   width: 90%;
   padding: 5px 12px;
@@ -616,7 +478,6 @@ h4.PNR-status-details {
 
 .hidden2 {
   display: none;
-  /* display: block; */
 }
 
 .modal3 {
@@ -628,7 +489,6 @@ h4.PNR-status-details {
   color: #333;
   padding-top: 12px;
   border-radius: 8px;
-  /* margin-right: 32px; */
   margin-right: 50px;
 }
 
@@ -648,7 +508,6 @@ h4.PNR-status-details {
 }
 
 .modal3 .container p {
-  /* padding: 0px 16px; */
   padding: 8px 10px;
 }
 
@@ -664,23 +523,18 @@ h4.PNR-status-details {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  /* transition: all 0.3s; */
   text-align: center;
   padding: 5px 25px;
-
-  /* (remove) */
   border-radius: 3rem;
 }
 
 .btn_confirm:hover {
   outline: none;
-  /* background-color: rgb(245, 245, 245); */
   outline: 1px solid rgb(31, 31, 31);
   background-color: rgba(255, 255, 255, 0.8);
 }
 .btn_cancel:hover {
   outline: none;
-  /* background-color: rgb(245, 245, 245); */
   outline: 1px solid rgb(31, 31, 31);
   background-color: rgba(255, 255, 255, 0.8);
 }
@@ -689,39 +543,16 @@ h4.PNR-status-details {
   overflow-x: auto;
 }
 
-/*autoComplete feature*/
-/* .output1 ul li,.output2 ul li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  .output1 ul,.output2 ul {
-    margin: 0;
-    padding: 5px;
-    background-color: gray;
-    width: 150px;
-    color: white;
-  } */
-
-/** Design Part **/
-/* 
-.train-list img {
-  width: 100%;
-  height: 100%;
-} */
-
 .train-list .init-window img {
   width: 20%;
   height: 30%;
   display: block;
   margin: 40px auto;
-  /* margin-left: auto;
-  margin-right: auto; */
 }
 
 .train-list .init-window p {
   font-size: 40px;
-  color: #ff5e00;
+  color: rgb(0 0 0 / 70%);
   font-family: monospace;
   z-index: -5;
 }
@@ -730,29 +561,8 @@ hr {
   margin-top: 15px;
   margin-left: 70px;
 }
-/* TIME-OUR*/
-/* 
-.logout-timer {
-  padding: 2px 0.3rem;
-  margin-top: 1.9rem;
-  font-size: 1.25rem;
-  grid-column: 1 / span 2;
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 2rem;
-  justify-content: center;
-  background-color: #5bdbbfb2;
-  border-radius: 8px;
-  font-size: 14px;
-  color: rgb(43, 46, 226);
-}
 
-.logout-timer .timer {
-  font-weight: bolder;
-  margin-left: 5px;
-} */
-
-/**/
+/** TRAIN ANIMATION **/
 
 .content {
   position: relative;
@@ -798,14 +608,11 @@ hr {
 
 .train {
   position: absolute;
-  /* width: 50px;
-  height: 30px; */
   width: 60px;
   height: 40px;
   border: 5px solid #333;
   background-color: #9e2a2b;
   border-radius: 0 10px 0 0;
-  /* top: 230px; */
   top: 140px;
   left: 285px;
   animation: scale 1s linear infinite;
@@ -853,7 +660,6 @@ hr {
   box-shadow: inset 2px -5px rgba(255, 255, 255, 0.3);
   width: 20px;
   height: 30px;
-  /* left: -37.5px; */
   left: -35.5px;
   top: -20px;
 }
@@ -1043,17 +849,6 @@ hr {
   left: -153px;
   box-shadow: 95px 0px #333;
 }
-/* 
-.windows:after {
-  content: "";
-  position: absolute;
-  background-color: #333;
-  height: 5px;
-  width: 40px;
-  top: 51px;
-  left: -125px;
-  box-shadow: 95px 0 #333;
-} */
 
 @keyframes spin {
   from {
@@ -1068,7 +863,6 @@ hr {
   position: absolute;
   width: 20px;
   height: 20px;
-  /* background-color: #fff; */
   background-color: rgb(31, 28, 28);
   border-radius: 50%;
   opacity: 0;
@@ -1112,7 +906,7 @@ hr {
 .swal-text {
   font-size: 24px;
 
-  background-color: #fefae3;
+  background-color: #e0fcf2;
 
   padding: 17px;
 
@@ -1124,5 +918,5 @@ hr {
 
   text-align: center;
 
-  color: #61534e;
+  color: #333;
 }
