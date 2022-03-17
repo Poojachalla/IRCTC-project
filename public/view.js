@@ -18,12 +18,11 @@ class View {
   _helperHandler;
   _currentDate = new Date().toISOString().split("T")[0];
   _places = ["Anakapalle", "Tirupati", "Gundur", "Nellore", "Kavali", "Ongole", "Chirala", "Tenali", "Vijayawada", "Warangal", "Secunderabad", "Nizamabad", "Adilabad", "Vishakapatnam", "Rajamundry", "Eluru", "Hyderabad", "Guntur", "Chennai Central", "Mahbubabad", "Kazipet", "Kondapalli", "Khammam", "Ghanpur", "New Delhi", "Agra Cantt", "Gwalior", "Bhopal", "Nagpur", "Chandrapur", "Balharshah", "Sirpur Kagazngr", "Ramgundam"];
-  _stopTimeOut;
   constructor() { }
 
   /**
- * To set Date feild default as current date and to set calender field for Booking section
- */
+  * To set Date feild default as current date and to set calender field for Booking section
+  */
   setDatefieldInBookingSection() {
     document.querySelector(".form__date").value = this._currentDate;
     document.querySelector(".form__date").min = this._currentDate;
@@ -200,15 +199,6 @@ class View {
           ele.style.backgroundColor = "#a9b6af";
           event.preventDefault();
           this._modal1.classList.remove("hidden");
-
-          /* SetTimeOut method is open for user for 10 sec time period to select number of passengers. 
-           After that time it will close automatically*/
-          /* this._stopTimeOut=setTimeout(()=>{
-            this._modal1.classList.add("hidden");
-            this._overlay[0].classList.add("hidden");
-          },10000) */
-
-
           this._overlay[0].classList.remove("hidden");
 
           document.querySelector(".passengers").classList.remove("hidden");
@@ -257,12 +247,6 @@ class View {
   bindSelectPassengers(handler) {
     this.getModel1Elements();
     this._passengerNo.addEventListener("change", (event) => {
-
-      //To clear SetTimeout method
-      /* clearTimeout(this._stopTimeOut);
-      this._modal1.classList.remove("hidden");
-      this._overlay[0].classList.remove("hidden"); */
-
       event.preventDefault();
       this.helperToResetNoOfpassengerFeilds(event);
       const value = event.target.value;
@@ -295,7 +279,10 @@ class View {
     this._passengerdetails = [];
   }
 
-  //To reset passenger number field
+  /**
+  * To reset passenger number field
+  * @returns {any}
+  */
   resetPassengerNumberfield() {
     this._passengerNo.value = "Select number of passengers";
     document.querySelector(".Confirm_Booking").classList.add("hidden");
@@ -307,7 +294,7 @@ class View {
    * To Handle no. of passengers given by user like 1, 2, 3 or 4 and 4 is the maximum limit
    * @param {number} value
    * @param {method} handler
-    */
+  */
   addPassengersDetailsFields(value, handler) {
     if (value > 1) {
       document.querySelector(`.passengers`).classList.add("passenger-scroll");

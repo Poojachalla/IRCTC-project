@@ -1,7 +1,3 @@
-//import Swal from 'sweetalert2/dist/sweetalert2.js';
-
-//Swal("Hi");
-
 /** Model Class for HTTP calls,database connection and data manipulation.*/
 class Model {
   /**
