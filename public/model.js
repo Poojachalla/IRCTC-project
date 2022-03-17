@@ -1,8 +1,12 @@
-/**
-   * Model  Class for database connection and data manipulation.
-   * @this {Object} Model instance
-   */
+//import Swal from 'sweetalert2/dist/sweetalert2.js';
+
+//Swal("Hi");
+
+/** Model Class for HTTP calls,database connection and data manipulation.*/
 class Model {
+  /**
+   *  Private variables declaration
+   */
   _trainsDetails = "";
   _trainJunctions = "";
   _trainDates = "";
@@ -18,17 +22,41 @@ class Model {
 
 /**
  * To get train details by junction index
- * @param {Number} index
+ * @param {number} index
  * @returns {Array}
  */
  getTrainDetailsByJunctionIndex(index) {
     return this._trainsDetails[index];
   }
 
-  getJunctionStationsByIndex(index1, index2) {
+/**
+ * To get train Junctions by using map method
+ */
+  getJunctions() {
+    this._trainJunctions = this._trainsDetails.map(
+      (item, index) => item["junctions"]
+    );
+    //console.log(this._trainJunctions);
+  }
+
+/**
+ * To get Junction Stations by its Index
+ * @param {number} index1
+ * @param {number} index2
+ * @returns {Array}
+ */
+ getJunctionStationsByIndex(index1, index2) {
     return this._trainJunctions[index1][index2];
   }
 
+/**
+ * To get train start,end dates and available seats of a train
+ * @param {number} i1
+ * @param {number} i2
+ * @param {number} i3
+ * @param {number} dateIndex
+ * @returns Array of strings
+ */
   getTrainStartAndEndDateAvailableSeats(i1, i2, i3, dateIndex) {
     let source = this.getJunctionStationsByIndex(i1, i2);
     let destination = this.getJunctionStationsByIndex(i1, i3);
@@ -39,6 +67,12 @@ class Model {
     ];
   }
 
+/**
+ * To calculate time difference between start and end time of a train
+ * @param {string} start
+ * @param {string} end
+ * @returns {string} 
+ */
   CalculateTimeDifference(start, end) {
     let t1parts = start.Time.split(":");
     let t1cm = Number(t1parts[0]) * 60 + Number(t1parts[1]);
@@ -51,6 +85,12 @@ class Model {
     return Math.abs(hour) + "h " + Math.abs(min) + "m";
   }
 
+/**
+ * To searh user entered date with the available train dates. 
+ * @param {Array} date1
+ * @param {string} date2
+ * @returns {string | boolean} The i is found date and bolean is status whether date is found or not.
+ */
   searchDate(date1, date2) {
     let check = false;
     for (let i = 0; i < date1.length; i++) {
@@ -62,6 +102,12 @@ class Model {
     if (check === false) return [false, false];
   }
 
+/**
+ * To compare train time with current time
+ * @param {string} date
+ * @param {string} time1
+ * @returns {string} The train state status
+ */
   CompareTrainTimeWithCurrentTime(date, time1) {
     this._currentDate = new Date().toISOString().split("T")[0];
     if (date === this._currentDate) {
@@ -86,6 +132,12 @@ class Model {
     }
   }
 
+/**
+ * To convert user entered station and train stations to lower case. To find if searched station contains in the trains station points. 
+ * @param {string} value1
+ * @param {string} value2
+ * @returns {boolean} The station found status
+ */
   TrainStationsToCovertTolowerCaseAndCompare(value1, value2) {
     value1 = value1 + "";
     value2 = value2 + "";
@@ -93,13 +145,19 @@ class Model {
     else return false;
   }
 
+/**
+ * To search trains by user entered fields source,destination and date. 
+ * @param {string} source
+ * @param {string} destination
+ * @param {string} date
+ * @returns {Array} The trains found list and status
+ */
   searchTrain(source, destination, date) {
-    //console.log(source, destination, date);
     let status = false; //To check if train is found are not false=NOT found
     let trainsFound = [];
     let timediff;
-    /* NOTE: index1=index of matched junctions point, index2= index of matched source station,
-     index3= index of matched destination station */
+    /*index1 is index of matched junctions point. index2 is index of matched source station,
+     index3 is index of matched destination station */
     this._trainJunctions.forEach((res1, index1) => {
       res1.forEach((res2, index2) => {
         if (
@@ -108,9 +166,7 @@ class Model {
             source
           ) === true &&
           this.searchDate(res2["Date"], date)[1] === true
-          //this.CompareTrainTimeWithCurrentTime(date, res2["Time"]) === true)
         ) {
-          //console.log(source, date, index1, index2);
           this._trainJunctions[index1].forEach((des, index3) => {
             //To check source index is less than destination index
             if (
@@ -120,7 +176,6 @@ class Model {
               ) === true &&
               index2 < index3
             ) {
-              //console.log(source, date, destination, index1, index2, index3);
               this.CompareTrainTimeWithCurrentTime(date, res2["Time"]);
               status = true;
               timediff = this.CalculateTimeDifference(
@@ -128,6 +183,7 @@ class Model {
                 this.getJunctionStationsByIndex(index1, index3)
               );
 
+              //Pushing the found train details into an array
               trainsFound.push([
                 this.getTrainDetailsByJunctionIndex(index1),
                 this.getJunctionStationsByIndex(index1, index2),
@@ -147,39 +203,48 @@ class Model {
       });
     });
 
-    //console.log(trainsFound);
     return [trainsFound, status];
   }
 
+/**
+ * Fetching the trains data from the specified URL "http://localhost:4500/trainsDetails".
+ * @async
+ * @param {string} source
+ * @param {string} destination
+ * @param {string} date
+ * @returns {Array} The trains found list and status
+ */
   async getTrainsDetails(source, destination, date) {
     const req = await fetch(`http://localhost:4500/trainsDetails`);
     this._trainsDetails=await req.json();
 
     //console.log(this._trainsDetails);
+    this.getJunctions();
      return this.searchTrain(source, destination, date);
    }
  
 
+/**
+ * To update avialiable seats fields in Mongodb database by using POST method.  
+ * @param {Array} traindata
+ * @param {string} UpdatedSeats
+ */
   updateJSONWithUpdatedAvailableSeats(traindata, UpdatedSeats) {
     console.log(traindata,UpdatedSeats);
     let trainName=traindata[0].split("(")[0].trimEnd();
-    let station =traindata[1];
-    let date=new Date(traindata[2].slice(8));
+    /* let station =traindata[1];
+    let date=new Date(traindata[2].slice(8)); */
     for (let i = 0; i < this._trainsDetails.length; i++) {
       if (this._trainsDetails[i].train_name === traindata[0].split("(")[0].trimEnd()) {
         this._trainsDetails[i]["junctions"].forEach((s, k) => {
           if (s[`Station-${k + 1}`] === traindata[1]) {
-            //console.log("entered2");
             let d = new Date(traindata[2].slice(8));
             let date = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
               .toISOString()
               .split("T")[0];
             s["Date"].forEach(async (d, j) => {
               if (d === date) {
-                let place =
-                  this._trainsDetails[i]["junctions"][k]["Available_Seat"][j];
-                //this._trainsDetails[i]["junctions"][k]["Available_Seat"][j] = UpdatedSeats;
-                //console.log(i,k,j,place,traindata[2].slice(0,8));
+                //this._trainsDetails[i]["junctions"][k]["Available_Seat"][j];
                 const rawResponse = await fetch(`/trainsDetails/${trainName}`, {
                   method: "POST",
 
@@ -195,7 +260,6 @@ class Model {
                     "Content-Type": "application/json",
                   },
                 });
-
                 const content = await rawResponse.json();
               }
             });
@@ -205,8 +269,11 @@ class Model {
     }
   }
 
+/**
+ * To send data of booked ticket details into MYSQL database.
+ * @param {Array} BookedPassengersdata contains booked passenger details
+ */
   storeDataOfBookedTicketIntoDataBase(BookedPassengersdata) {
-    //console.log(BookedPassengersdata); //this contains booked passengers information
     let passengerdetails = [];
     let [pnr_number] = BookedPassengersdata.splice(-2, 1);
     BookedPassengersdata.forEach((el, index) => {
@@ -214,8 +281,10 @@ class Model {
         passengerdetails.push(el);
       }
     });
+    //calling a method to send train details data
     this.sendBookedTrainDataToDatabase(pnr_number,BookedPassengersdata[BookedPassengersdata.length - 1]);
     passengerdetails.forEach((ele, index) => {
+      //calling a method to send passenger details data
       this.sendBookedPassengerDataToDatabase(
         ele,
         pnr_number,
@@ -224,7 +293,11 @@ class Model {
   }
 
 
-  //To send Booked TrainData into Database
+/**
+ * To send booked train Data into MYSQL Database using POST method
+ * @param {string} pnrnumber the 10 digit PNR number
+ * @param {Array} traindata
+ */
   async sendBookedTrainDataToDatabase(pnrnumber, traindata) {
     const rawResponse = await fetch("/bookedTraindata", {
       method: "POST",
@@ -242,10 +315,16 @@ class Model {
     });
 
     const content = await rawResponse.json();
-  }
+  }   
     
-    //To send Booked paasenger Data into Database
+/**
+ * To send Booked paasenger Data into MYSQL Database using POST method
+ * @async
+ * @param {Array} ele
+ * @param {string} pnrnumber
+ */
     async sendBookedPassengerDataToDatabase(ele, pnrnumber) {
+    //console.log(ele[4]);
     const rawResponse = await fetch("/bookedpassengersdata", {
       method: "POST",
       body: JSON.stringify({
@@ -265,6 +344,12 @@ class Model {
     const content = await rawResponse.json();
   }
 
+/**
+ * To get PNR details from dataBase by PNR number using GET method
+ * @async
+ * @param {string} pnrnumber
+ * @returns {Array} The found PNR number details
+ */
   async setEditModal(pnrnumber) {
     // Get information about the booking using PNR Number
     const req = await fetch(
@@ -275,7 +360,13 @@ class Model {
     return this._FoundPnr;
   }
 
-  async getstoreDataOfBookedTicketIntoDataBase(pnrnumber) {
+/**
+ * To get stored data of booked ticket from DataBase by PNR number
+ * a@async
+ * @param {string} pnrnumber
+ * @returns {Array | boolean} The found PNR details and found status
+ */
+  async getstoreDataOfBookedTicketFromDataBase(pnrnumber) {
     let status = false; //To check if pnr number  is found are not false=NOT found
     let pnrfound1 = await this.setEditModal(pnrnumber);
     //console.log(pnrfound1);
@@ -289,17 +380,16 @@ class Model {
 
   //Cancellation
 
-  async storeDataOfCancelledTicketIntoDataBase(pnrnumberCancel,
-    CancelBerth,
-    CancelName,
-    CancelSeatNo,
-    CancelStatus) {
-    /* console.log(pnrnumberCancel,
-      CancelBerth,
-      CancelName,
-      CancelSeatNo,
-      CancelStatus); */
-
+/**
+ * To store data of cancelled ticket into DataBase using PUT method
+ * @async
+ * @param {string} pnrnumberCancel
+ * @param {string} CancelBerth
+ * @param {string} CancelName
+ * @param {string} CancelSeatNo
+ * @param {string} CancelStatus
+ */
+  async storeDataOfCancelledTicketIntoDataBase(pnrnumberCancel,CancelBerth,CancelName,CancelSeatNo,CancelStatus) {
     const rawResponse = await fetch(
       `http://localhost:4500/bookedpassengersdata/${pnrnumberCancel}`,
       {
@@ -322,4 +412,4 @@ class Model {
 
 }
 
-export default new Model();
+export default new Model();                                 //Exporting Model class object

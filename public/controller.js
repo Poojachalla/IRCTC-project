@@ -1,8 +1,12 @@
-import Model from "./model.js";
-import View from "./view.js";
+import Model from "./model.js";                                   //Importing Model class object
+import View from "./view.js";                                     //Importing View class object
 
 /**************** CLASS CONTROLLER  ******************/
+/** class Controller it connects model and view to handle fired events . 
+*/
+
 class Controller {
+  //private variables declartion
   _updatedAvailableSeats;
   _trainBookedDetails;
   _myInterval;
@@ -17,17 +21,18 @@ class Controller {
     this.view.bindConfirmCancel(this.getCancelPassengerData);     //To handle click operation on confirm cancel button
   }
 
-  init() {
-    //Check if Click action call done for inside events of modal1 Window
-    this.view.bindSelectPassengers(this.handleSelectPassengers);
-  }
-  
+  /**
+ * Handler method after clicking on search trains button
+ * @param {string} source
+ * @param {string} destination
+ * @param {string} date 
+  */
+  handleSearchTrains = async (source, destination, date) => {
+    clearInterval(this.myInterval);                               //To stop setInterval means fetching of train data from Database
 
-  //handler method for search trains button
- handleSearchTrains = async(source, destination, date) => {
-  clearInterval(this.myInterval);
+    //calling getTrainDetails in model class for getting train details depending on the user selection
     [this._trainsFoundlist, this.status] = await this.model.getTrainsDetails(source, destination, date);
-  
+
     //To check status whether trains are found or not
     if (this.status === false) {
       alert("No Trains Found");
@@ -35,13 +40,13 @@ class Controller {
     } else {
       this.view.displayMovements(this._trainsFoundlist);
 
-      //setinterval to fetch avialable seats of trains for every 10 sec 
-      this.myInterval=setInterval(async()=>{
+      //setinterval to fetch avialable seats of trains for every 1 sec 
+      this.myInterval = setInterval(async () => {
         [this._trainsFoundlist, this.status] = await this.model.getTrainsDetails(source, destination, date);
         this.view.displayMovements(this._trainsFoundlist);
         this.view.bindAvailableSeatsClick(this.handleAvailableSeatsClick);
         this.view.bindModelWindow1Close();
-      },5000);
+      }, 1000);
     }
 
     //Click action call to open modal1 Window
@@ -50,47 +55,42 @@ class Controller {
 
   };
 
-  //handler method for AvailableSeats button
+  /**
+   * Handler method, after clicking on AvailableSeats button
+   * @param {HTMLElement} movementSelected
+  */
   handleAvailableSeatsClick = (movementSelected) => {
     this._movementSelected = movementSelected;
     //Check if Click action call done for inside events of modal1 Window
-    this.init();
+    this.view.bindSelectPassengers(this.handleSelectPassengers);
   };
 
-  //handler method for select passengers input
-  handleSelectPassengers = (value) => {
-    console.log("Booked pasenger details:", value);
-    //console.log("Booked train details:", this._movementSelected);
-    this.generateSeatNumber(value, this._movementSelected);
-    this.generateUniquePNR(value);
-
-    //Update in Movements View also set in JSON File.
-    this.view.updateUIWithUpdatedAvailableSeats(
-      this._movementSelected,
-      this._updatedAvailableSeats
-    );
+  /**
+   * Handler method for select passengers input
+   * @param {array} passDetails
+   * To pass selected number of passengers on select passengers click
+     */
+  handleSelectPassengers = (passDetails) => {
+    console.log("Booked pasenger details:", passDetails);
+    this.generateSeatNumber(passDetails, this._movementSelected);
+    this.generateUniquePNR(passDetails);
 
     //To update avaialble seats of trains in JSON file
     this.model.updateJSONWithUpdatedAvailableSeats(
       this._trainBookedDetails,
       this._updatedAvailableSeats
     );
-    //this.view.bindpnrsearch(this.handlepnrsearch);
   };
 
-  //Get method to get AvailableSeats
-  getAvailableSeatsNumber(movementSelected) {
-    let val = movementSelected
-      .querySelector(".Available-seats")
-      .textContent.replace(/\s+/g, "");
-    return val.slice(val.indexOf(":") + 1);
-  }
-
-  //To generate unique Seat Number
+  /**
+   * To generate unique Seat Number
+   * @param {number} value
+   * @param {htmlElement} movementSelected
+   * on click of book ticket button, ticket will be booked and will generate unique PNR number 
+   * To display different status based on avaibility like if seats are available then ticket status will be CF or WL
+   */
   generateSeatNumber(value, movementSelected) {
-    let avlSeats = this.getAvailableSeatsNumber(movementSelected);
-    //console.log(avlSeats);
-
+    let avlSeats = this.view.getAvailableSeatsNumber(movementSelected,this._trainsFoundlist);
     value.forEach((v) => {
       if (avlSeats.at(0) === "A" && Number(avlSeats.slice(1)) > 0) {
         v.push("CF");
@@ -103,44 +103,45 @@ class Controller {
         v.push(`WL${Number(avlSeats.slice(1)) + 1}`);
         avlSeats = this._updatedAvailableSeats;
       } else {
-        //if (avlSeats.at(0) === "W" && Number(avlSeats.slice(1) > 0)) {
         this._updatedAvailableSeats = `W${Number(avlSeats.slice(1)) + 1}`;
         v.push("WL");
         v.push(`WL${Number(avlSeats.slice(1)) + 1}`);
         avlSeats = this._updatedAvailableSeats;
       }
     });
-    //console.log(value);
   }
 
-
-  //To generate unique 10 digit PNR number
+  /**
+ * To generate unique 10 digit PNR number
+ * @param {Array} value
+ *which is a comibination of passenger's name first letter, gender first letter, age first digit along with 5 digit random number 
+ */
   generateUniquePNR(value) {
     let Pnr = "";
     for (let i = 0; i < 5; i++) {
       Pnr += value[0][i].at(0);
     }
-    Pnr += Math.floor(Math.random() * 90000) + 10000; //Generating random 5 digit number
+    Pnr += Math.floor(Math.random() * 90000) + 10000;                           //Generating random 5 digit number
     value.push(Pnr.toUpperCase());
-    //console.log(value, this._movementSelected);
-
     //Store booked ticket details into dataBase
     this._trainBookedDetails = this.view.getTrainBookedDetails(
       this._movementSelected
     );
     console.log("Booked train details:", this._trainBookedDetails);
-    value.push(this._trainBookedDetails); //this.view.getTrainBookedDetails(this._movementSelected)); //To push selected train details into value array
+    value.push(this._trainBookedDetails);                                        //To push selected train details into value array
     this.view.showBookingCompletedWindowWithPNRNumber(Pnr.toUpperCase());
-    console.log(value);
     this.model.storeDataOfBookedTicketIntoDataBase(value);
   }
 
-  //handler method for PNR search button
+  /**
+ * Handler method for PNR search button
+ * @param {string} pnrnumber
+ * by entering unique PNR number user can view their ticket details, if user enters invalid PNR then it will show alert like
+ * no record found with entered PNR number
+ */
   handlepnrsearch = async (pnrnumber) => {
     [this._pnrnumberlist, this._status] =
-      await this.model.getstoreDataOfBookedTicketIntoDataBase(pnrnumber);
-    //console.log(this._pnrnumberlist, this._status);
-
+      await this.model.getstoreDataOfBookedTicketFromDataBase(pnrnumber);
     //To check whether pnr number is found or not
     if (this._status === false) {
       alert("PNR Number not found");
@@ -151,11 +152,14 @@ class Controller {
     this.view.bindModelPNRWindowClose();
   };
 
-  //handler method for PNR search cancellation button
+  /**
+ * Handler method for PNR search cancellation button
+ * @param {string} pnrnumber
+ * this will allow user to cancel ticket
+ */
   handlepnrsearchCancel = async (pnrnumber) => {
     [this._pnrnumberlist, this._status] =
-      await this.model.getstoreDataOfBookedTicketIntoDataBase(pnrnumber);
-
+      await this.model.getstoreDataOfBookedTicketFromDataBase(pnrnumber);
     //To check whether pnr number is found or not
     if (this._status === false) {
       alert("PNR Number not found");
@@ -165,22 +169,14 @@ class Controller {
     }
     this.view.bindModelPNRCancelWindowClose();
   };
-
   //To send cancelled passenger data to MYSQL database
-  getCancelPassengerData=((
+  getCancelPassengerData = ((
     pnrnumberCancel,
     CancelBerth,
     CancelName,
     CancelSeatNo,
     CancelStatus
-  )=>{
-    /* console.log(
-      pnrnumberCancel,
-      CancelBerth,
-      CancelName,
-      CancelSeatNo,
-      CancelStatus
-    ); */
+  ) => {
     this.model.storeDataOfCancelledTicketIntoDataBase(pnrnumberCancel,
       CancelBerth,
       CancelName,
@@ -189,6 +185,4 @@ class Controller {
   });
 }
 
-const app = new Controller(Model, View);
-
-//setInterval(app.handleSearchTrains(app.source, app.destination, app.date),100);
+const app = new Controller(Model, View);                                //Creating a app object by passing Model and View class objects as parameters

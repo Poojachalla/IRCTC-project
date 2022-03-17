@@ -1,6 +1,8 @@
-
 /************* CLASS VIEW  ******************/
+/** class View it will handle all actions performed by user and also handles DOM Elements maniplation
+*/
 class View {
+  //Private variables declaration
   _trainlistElement = document.querySelector(".train-list");
   _source = document.querySelector(".source");
   _destination = document.querySelector(".destination");
@@ -15,18 +17,21 @@ class View {
   _trainslist;
   _helperHandler;
   _currentDate = new Date().toISOString().split("T")[0];
+  _places = ["Anakapalle", "Tirupati", "Gundur", "Nellore", "Kavali", "Ongole", "Chirala", "Tenali", "Vijayawada", "Warangal", "Secunderabad", "Nizamabad", "Adilabad", "Vishakapatnam", "Rajamundry", "Eluru", "Hyderabad", "Guntur", "Chennai Central", "Mahbubabad", "Kazipet", "Kondapalli", "Khammam", "Ghanpur", "New Delhi", "Agra Cantt", "Gwalior", "Bhopal", "Nagpur", "Chandrapur", "Balharshah", "Sirpur Kagazngr", "Ramgundam"];
+  _stopTimeOut;
+  constructor() { }
 
-  _places = ["Anakapalle","Tirupati","Gundur","Nellore","Kavali","Ongole","Chirala","Tenali","Vijayawada","Warangal","Secunderabad","Nizamabad","Adilabad","Vishakapatnam","Rajamundry","Eluru","Hyderabad","Guntur","Chennai Central","Mahbubabad","Kazipet","Kondapalli","Khammam","Ghanpur","New Delhi","Agra Cantt","Gwalior","Bhopal","Nagpur","Chandrapur","Balharshah","Sirpur Kagazngr","Ramgundam"];
-
-  constructor() {}
-
-  //to set calender field for Booking section
+  /**
+ * To set Date feild default as current date and to set calender field for Booking section
+ */
   setDatefieldInBookingSection() {
     document.querySelector(".form__date").value = this._currentDate;
     document.querySelector(".form__date").min = this._currentDate;
   }
 
-  /*model window-1 Booking section elements*/
+  /**
+   * To get Model window-1 Booking section elements
+   */
   getModel1Elements() {
     this._overlay = document.querySelectorAll(".overlay");
     this._openButton1 = document.querySelectorAll(".Available-seats");
@@ -35,7 +40,11 @@ class View {
     this._passengerNo = document.querySelector(".passengers-number");
   }
 
-  //To change date format
+  /**
+   * To change date format for ex: 31/03/2022
+   * @param {string} date
+   * @returns {string} 
+   */
   getDateFormat(date) {
     let d = new Date(date);
     let options = {
@@ -49,37 +58,39 @@ class View {
     return newDate;
   }
 
+  /**
+   * To reset train details momements if train not found //doubt
+   */
   removeTrainDetailsMovements() {
     document.querySelector(".train-list").innerHTML = "";
   }
 
-
-  //To display trains found after searching
+  /**
+   * To display trains found after clicking on search Train button
+   * @param {Array} trainslist
+   */
   displayMovements(trainslist) {
     this._trainslist = trainslist;
     this.removeTrainDetailsMovements(); //(or).textContent=0
+    trainslist.forEach((mov, index) => {
+      let temp, col;
+      if (mov[4][2].slice(0, 1) === "W") {
+        temp = "Waiting List:" + mov[4][2];
+        col = "#ff3838";
+      } else {
+        temp = "Available Seats:" + mov[4][2];
+        col = "#7dd035";
+      }
+      if (mov[5] === "TRAIN DEPARTED") {
+        temp = "TRAIN DEPARTED";
+        col = "#ff3838";
+      }
+      if (mov[5] === "NOT AVAILABLE") {
+        temp = "NOT AVAILABLE";
+        col = "#ff3838";
+      }
 
-    //console.log(this._trainslist);
-    trainslist.forEach((mov, index) =>
-      {
-        let temp, col;
-        if (mov[4][2].slice(0, 1) === "W") {
-          temp = "Waiting List:" + mov[4][2];
-          col = "#ff3838";
-        } else {
-          temp = "Available Seats:" + mov[4][2];
-          col = "#7dd035";
-        }
-        if (mov[5] === "TRAIN DEPARTED") {
-          temp = "TRAIN DEPARTED";
-          col = "#ff3838";
-        }
-        if (mov[5] === "NOT AVAILABLE") {
-          temp = "NOT AVAILABLE";
-          col = "#ff3838";
-        }
-
-        const html = `
+      const html = `
         <div class="movements__row">
             <div class="movements__type movements__type--train">
             ${mov[0].train_name} (${mov[0].train_number})
@@ -102,21 +113,18 @@ class View {
                   width="20px"
                 />
               </span>
-              <span class="train-time-destination">${
-                Object.values(mov[2])[0]
-              }</span>
+              <span class="train-time-destination">${Object.values(mov[2])[0]
+        }</span>
               <br />
               </div>
               <div class="train-dates">
               <span class="Train-Start-date">
-                <span class="train-timings">${
-                  mov[1].Time
-                }</span> ${this.getDateFormat(mov[4][0])}</span
+                <span class="train-timings">${mov[1].Time
+        }</span> ${this.getDateFormat(mov[4][0])}</span
               >
               <span class="Train-End-date">
-                <span class="train-timings">${
-                  mov[2].Time
-                } </span> ${this.getDateFormat(mov[4][1])}</span
+                <span class="train-timings">${mov[2].Time
+        } </span> ${this.getDateFormat(mov[4][1])}</span
               >
               </div>
               <br />
@@ -126,33 +134,33 @@ class View {
             </div>
           </div>`;
 
-        document
-          .querySelector(".train-list")
-          .insertAdjacentHTML("afterbegin", html); //this._trainlistElement this keyword is not working
-      }
+      document
+        .querySelector(".train-list")
+        .insertAdjacentHTML("afterbegin", html);
+    }
     );
   }
 
-  /*autoComplete feature*/
+  /**
+   * To perform AutoComplete feature for searching train source and destinations
+   */
   AutoCompleteForFromANDTo() {
     let options = "";
-
     for (let i = 0; i < this._places.length; i++) {
       options += '<option value="' + this._places[i] + '" />';
     }
-
     document.getElementById("From").innerHTML = options;
     document.getElementById("To").innerHTML = options;
   }
 
-  //Search button click function
+  /**
+   * To Handle Search button click function, by clicking search button trains lists will be display based 
+   * on the source and distination entered by passenger
+   * @param {method} handler
+   */
   bindSearchTrainsButton(handler) {
-    //this.autocomplete(document.getElementById("myInput"), this._places);
     this._searchButton.addEventListener("click", (event) => {
       event.preventDefault();
-
-      //this.closeAllLists(event.target);
-
       if (
         !this._source.value ||
         !this._destination.value ||
@@ -160,9 +168,7 @@ class View {
       ) {
         alert("Please enter all fields");
         this.removeTrainDetailsMovements();
-      } /* else if (new Date(this._date.value) < new Date()) {
-        alert("please enter correct date");
-      } */ else {
+      } else {
 
         handler(
           this._source.value.trimStart().trimEnd(),
@@ -177,12 +183,14 @@ class View {
     });
   }
 
-
-  //To check if user clicked on Available seats button
+  /**
+   * To check if user clicked on Available seats button
+   * @param {method} handler
+   * @returns {htmlElement}
+   */
   bindAvailableSeatsClick(handler) {
     this._helperHandler = handler;
     this.getModel1Elements();
-    //console.log(this._openButton1);
     document.querySelectorAll(".Available-seats").forEach((ele) => {
       if (
         ele.textContent.trim() != "TRAIN DEPARTED" &&
@@ -192,6 +200,15 @@ class View {
           ele.style.backgroundColor = "#a9b6af";
           event.preventDefault();
           this._modal1.classList.remove("hidden");
+
+          /* SetTimeOut method is open for user for 10 sec time period to select number of passengers. 
+           After that time it will close automatically*/
+          /* this._stopTimeOut=setTimeout(()=>{
+            this._modal1.classList.add("hidden");
+            this._overlay[0].classList.add("hidden");
+          },10000) */
+
+
           this._overlay[0].classList.remove("hidden");
 
           document.querySelector(".passengers").classList.remove("hidden");
@@ -209,8 +226,9 @@ class View {
     });
   }
 
-
-  //To close Model-1(ticket booking) window 
+  /**
+   * To close Model-1(ticket booking) window
+   */
   bindModelWindow1Close() {
     this._closeButton1[0].addEventListener("click", (event) => {
       event.preventDefault();
@@ -227,19 +245,24 @@ class View {
           ele.style.backgroundColor = "#7dd035";
         }
       });
-      /* document
-          .querySelectorAll(".Confirm_Booking")
-          .forEach((e) => (e.style.backgroundColor = "#87dcbc")); */
-
       //To reset Number of passengers field value
       this.resetPassengerNumberfield();
     });
   }
 
-  //To select number of passengers
+  /**
+   * To select number of passengers
+   * @param {method} handler
+   */
   bindSelectPassengers(handler) {
     this.getModel1Elements();
     this._passengerNo.addEventListener("change", (event) => {
+
+      //To clear SetTimeout method
+      /* clearTimeout(this._stopTimeOut);
+      this._modal1.classList.remove("hidden");
+      this._overlay[0].classList.remove("hidden"); */
+
       event.preventDefault();
       this.helperToResetNoOfpassengerFeilds(event);
       const value = event.target.value;
@@ -247,8 +270,9 @@ class View {
     });
   }
 
-
-  //To reset number of passengers
+  /**
+   * To reset number of passengers, if user changes no. of passengers feild
+   */
   helperToResetNoOfpassengerFeilds() {
     for (let i = 0; i < 4; i++) {
       document
@@ -275,12 +299,15 @@ class View {
   resetPassengerNumberfield() {
     this._passengerNo.value = "Select number of passengers";
     document.querySelector(".Confirm_Booking").classList.add("hidden");
-
-    //["input[type=text], textarea"]
     this.helperToResetNoOfpassengerFeilds();
   }
 
-  //
+
+  /**
+   * To Handle no. of passengers given by user like 1, 2, 3 or 4 and 4 is the maximum limit
+   * @param {number} value
+   * @param {method} handler
+    */
   addPassengersDetailsFields(value, handler) {
     if (value > 1) {
       document.querySelector(`.passengers`).classList.add("passenger-scroll");
@@ -294,20 +321,24 @@ class View {
         .querySelector(`.Passenger-${i + 1}`)
         .classList.remove("hidden-passenger");
     }
-    for(let i=1;i<=4;i++){
-      let val=[...document.querySelector(`.Passenger-${i}`).elements];
-      val.forEach((ele, index) =>{
+    for (let i = 1; i <= 4; i++) {
+      let val = [...document.querySelector(`.Passenger-${i}`).elements];
+      val.forEach((ele, index) => {
         ele.removeAttribute('readonly');
-        if(index===2 || index===3){
-        //ele.style.removeProperty('disabled');
-        ele.disabled = false;
-      }
-    });
-  }
+        if (index === 2 || index === 3) {
+          ele.disabled = false;
+        }
+      });
+    }
 
     this.OnlickAddPassenger(handler);
   }
 
+  /**
+   * To Handle adding passengers details to book tickets
+   * @param {method} handler
+   * @returns {method}
+   */
   OnlickAddPassenger(handler) {
     document.querySelectorAll(".add-passenger").forEach((ele, i) => {
       ele.style.pointerEvents = "auto";
@@ -320,6 +351,13 @@ class View {
     });
   }
 
+  /**
+   * To Handle passengers details entered by user
+   * @param {Array} value
+   * @param {method} handler
+   * @param {DOMElement} clickElement
+   * @returns {Array}
+   */
   getEnteredPassengerDetails(value, handler, clickElement) {
     let val = [];
     if (
@@ -332,10 +370,6 @@ class View {
       let elements = [
         ...document.querySelector(`.Passenger-${value}`).elements,
       ];
-      //console.log(elements);
-      /* elements.forEach((ele, index) =>{
-        ele.removeAttribute('readonly');
-    }) */
       let check = true;
       elements.forEach((ele, index) => {
         if (index != elements.length - 1) {
@@ -349,46 +383,39 @@ class View {
       });
 
       if (check) {
-        let userInputCheck=0;
+        let userInputCheck = 0;
         //To check duplicate passenger details for same PNR
-        if(this._passengerdetails.length!==0){
-        this._passengerdetails[this._passengerdetails.length-1].forEach((ele,index)=>{
-          if(index<3 && ele===val[index]){
-              userInputCheck=userInputCheck+1;
-          }
-        });
-      }
-        if(userInputCheck===3){
+        if (this._passengerdetails.length !== 0) {
+          this._passengerdetails[this._passengerdetails.length - 1].forEach((ele, index) => {
+            if (index < 3 && ele.toLowerCase() === val[index].toLowerCase()) {
+              userInputCheck = userInputCheck + 1;
+            }
+          });
+        }
+        if (userInputCheck === 3) {
           alert("Failed to add passenger. Passenger with same details already exists");
-          elements.forEach((ele,index) =>{
-            ele.value="";
-            if(index===2) {ele.value = "Gender"; }//ele.removeAttribute('readonly');}
-            if(index===3) {ele.value = "Berth type";}// ele.removeAttribute('readonly');}
-        })
+          elements.forEach((ele, index) => {
+            ele.value = "";
+            if (index === 2) { ele.value = "Gender"; }
+            if (index === 3) { ele.value = "Berth type"; }
+          })
           elements[elements.length - 1].value = "Add Passenger";
         }
-        else{
+        else {
           this._passengerdetails.push(val);
+          elements[elements.length - 1].value = "Added Passenger";
+          clickElement.target.style.backgroundColor = "#1475cf";
+          clickElement.target.style.pointerEvents = "none";
+          elements.forEach((ele, index) => {
+            ele.setAttribute('readonly', true);
+            if (index === 2 || index === 3)
+              ele.disabled = true;
+          })
 
-        //To remove duplicates
-        //this._passengerdetails = Array.from(new Set(this._passengerdetails)); */
-        //this._passengerdetails = Array.from(this._passengerdetails);
-        //console.log(this._passengerdetails);
-
-        elements[elements.length - 1].value = "Added Passenger";
-        clickElement.target.style.backgroundColor = "#1475cf";
-        clickElement.target.style.pointerEvents = "none";
-        elements.forEach((ele,index) =>{
-          ele.setAttribute('readonly', true);
-          if(index===2 || index===3)
-          ele.disabled = true;
-      })
-        //clickElement.target.classList.add("onClick");
-
-        document.querySelector(".Confirm_Booking").classList.remove("hidden");
-        this.OnclickConfirmBooking(handler);
+          document.querySelector(".Confirm_Booking").classList.remove("hidden");
+          this.OnclickConfirmBooking(handler);
+        }
       }
-    }
     }
 
     //Before clicking "confirm booking button" if User changes no.of passengers or close the model window
@@ -396,6 +423,14 @@ class View {
     this.bindModelWindow1Close();
   }
 
+  /**
+   * To Validate entered passengers details like no blank spaces before or after the value and
+   * valiation for age like placed limit as 5-100 years and for phone number it should be 10 digit
+   * @param {string} ele
+   * @param {string} val
+   * @param {number} index
+   * @returns {boolean}
+   */
   validatePassengersDetails(ele, val, index) {
     if (index === 0) {
       if (val === null || val === "") {
@@ -441,24 +476,53 @@ class View {
     }
   }
 
+  /**
+   * To Handle Confirm Booking button, stop immediate propagation of process
+   * @param {method} handler
+   */
   OnclickConfirmBooking(handler) {
     document
       .querySelector(".Confirm_Booking")
       .addEventListener("click", (event) => {
-        //event.preventDefault();
-        //event.target.style.backgroundColor = "#1475cf";
         event.stopImmediatePropagation();
-        /* this.showBookingCompletedWindow(); */
         console.log(this._passengerdetails);
         handler(this._passengerdetails);
       });
   }
 
+
+  /**
+   * Get method to get Available seats after checking with Current Avaiable seats from the dataBase
+   * @param {htmlElement} movementSelected
+   * @param {Array} trainsFoundlist
+  */
+   getAvailableSeatsNumber(movementSelected,trainsFoundlist) {
+    let trainNumber=movementSelected.querySelector(".movements__type--train").textContent.replace(/\s+/g, "").split("(")[1].split(")")[0];
+    let Bdate=movementSelected.querySelector(".Train-Start-date").textContent;
+    let d=new Date(Bdate.trimStart().trimEnd().slice(9));
+    console.log(Bdate,d);
+    let date=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().split("T")[0];
+    trainsFoundlist.forEach((ele,index)=>{
+      if(trainNumber=== ele[0].train_number){
+          ele[1].Date.forEach((e,i)=>{
+            if(e===date){
+               movementSelected.querySelector(".Available-seats").textContent=ele[1].Available_Seat[i];
+            }
+          })
+      }   
+    });
+   
+    return movementSelected
+      .querySelector(".Available-seats")
+      .textContent.replace(/\s+/g, "");
+  }
+
+  /**
+   * To display booking ticket completion window with PNR numbers
+   * @param {string} pnrNumber
+   */
   showBookingCompletedWindowWithPNRNumber(pnrNumber) {
     document.querySelector(".PNR").textContent = pnrNumber;
-    this.showBookingCompletedWindow();
-  }
-  showBookingCompletedWindow() {
     document.querySelector(".passengers").classList.add("hidden");
     document
       .querySelector(".Book-ticket-section-heading")
@@ -466,18 +530,11 @@ class View {
     document.querySelector(".Booking_done").classList.remove("hidden");
   }
 
-  updateUIWithUpdatedAvailableSeats(Selected_train, seats) {
-    Selected_train = Selected_train.querySelector(".movements__type--train")
-      .textContent.replace(/\s+/g, "")
-      .split(")");
-    Selected_train = Selected_train[0].split("(");
-    this._trainslist.forEach(function (mov, index) {
-      if (Selected_train[1] === mov[0].train_number) mov[4][2] = seats;
-    });
-    this.displayMovements(this._trainslist);
-    this.bindAvailableSeatsClick(this._helperHandler);
-  }
-
+  /**
+   * Description
+   * @param {htmlElement} movements
+   * @returns {htmlElement}
+   */
   getTrainBookedDetails(movements) {
     return [
       movements
@@ -491,6 +548,10 @@ class View {
     ];
   }
 
+  /**
+   * To get ticket and passenger details with entered PNR number
+   * @param {method} handler
+   */
   bindpnrsearch(handler) {
     this._pnrsearchButton.addEventListener("click", (event) => {
       event.preventDefault();
@@ -504,12 +565,15 @@ class View {
       }
     });
   }
+
+  /**
+   * To get PNR Model Window 
+   */
   getModelpnrElements() {
     this._overlay1 = document.querySelectorAll(".overlay");
     this._openButton2 = document.querySelectorAll("#form__btn--PNR");
     this._closeButtonpnr = document.querySelectorAll(".close-modal1");
     this._modalPNR = document.querySelector(".modal2-PNR-details");
-
     this._PNRNumber = document.querySelector(".PNR-no");
     this._PNRTrainNameNumber = document.querySelector(".PNR-Train-name-number");
     this._PNRSource = document.querySelector(".PNR-source");
@@ -517,11 +581,13 @@ class View {
     this._PNRDateofjourneyTime = document.querySelector(".PNR-dateofjourney-time");
   }
 
+  /**
+   * To Get PNR Model window with matched ticket details
+   * @param {Array} pnrnumberFoundlist
+   */
   bindModelWindowpnr(pnrnumberFoundlist) {
     this.getModelpnrElements();
     this._overlay1[1].classList.remove("hidden1");
-    //console.log(pnrnumberFoundlist, typeof pnrnumberFoundlist);
-
     this._PNRNumber.textContent = pnrnumberFoundlist[0].pnrnumber;
     this._PNRTrainNameNumber.textContent = pnrnumberFoundlist[0].trainname;
     this._PNRSource.textContent = pnrnumberFoundlist[0].source;
@@ -551,6 +617,9 @@ class View {
     this._modalPNR.classList.remove("hidden1");
   }
 
+  /**
+   * To Close PNR Model window on click of close button
+   */
   bindModelPNRWindowClose() {
     this.getModelpnrElements();
     this._closeButtonpnr[1].addEventListener("click", (event) => {
@@ -560,10 +629,12 @@ class View {
     });
   }
 
-  //Cancellation button click event
+  /**
+   * To Handle Cancellation on click of Cancel Ticket button
+   * @param {method} handler
+   */
   bindpnrCancelsearch(handler) {
-      this._pnrCancelsearchButton.addEventListener("click", (event) => {
-      //console.log("enetrd Cancel click");
+    this._pnrCancelsearchButton.addEventListener("click", (event) => {
       event.preventDefault();
       if (!this._pnrCancelnumber.value) {
         alert("PNR number can't be Null. Please enter PNR number");
@@ -576,12 +647,12 @@ class View {
     });
   }
 
-  //To get PNR cancel model elements
+  /**
+   * To Get PNR Cancel model elements
+   */
   getModelpnrCancelElements() {
     this._overlay2 = document.querySelectorAll(".overlay");
-    this._openButtonCancel2 = document.querySelectorAll(
-      "#form__btn--Cancel-PNR"
-    );
+    this._openButtonCancel2 = document.querySelectorAll("#form__btn--Cancel-PNR");
     this._closeButtonpnrCancel = document.querySelectorAll(".close-modal1");
     this._modalPNRCancel = document.querySelector(".modal3");
     this._PNRNumber = document.querySelector(".PNR-no1");
@@ -591,19 +662,18 @@ class View {
     this._PNRDateofjourneyTime = document.querySelector(".PNR-dateofjourney1");
   }
 
-  //To close PNR cancellation model window
+  /**
+   * To Handle PNR Cancel  number matched Ticket list
+   * @param {Array} pnrnumberFoundlist
+   */
   bindModelWindowpnrCancel(pnrnumberFoundlist) {
     this.getModelpnrCancelElements();
     this._overlay2[2].classList.remove("hidden2");
-    //console.log(pnrnumberFoundlist, typeof pnrnumberFoundlist);
-
     this._PNRNumber.textContent = pnrnumberFoundlist[0].pnrnumber;
-    //console.log(this._PNRNumber.textContent);
     this._PNRTrainNameNumber.textContent = pnrnumberFoundlist[0].trainname;
     this._PNRSource.textContent = pnrnumberFoundlist[0].source;
     this._PNRDestination.textContent = pnrnumberFoundlist[0].destination;
-    this._PNRDateofjourneyTime.textContent =
-      pnrnumberFoundlist[0].sourcedatetime;
+    this._PNRDateofjourneyTime.textContent = pnrnumberFoundlist[0].sourcedatetime;
     document.querySelector(".table-body-cancel").innerHTML = "";
     pnrnumberFoundlist.forEach((ele, index) => {
       if (ele.passengerstatus === "WL") {
@@ -613,9 +683,8 @@ class View {
       }
 
       const html = `<tr class= "test${index + 1}">
-              <td><input class="checked hidden" type="checkbox"/> Passenger-${
-                index + 1
-              }</td>
+              <td><input class="checked hidden" type="checkbox"/> Passenger-${index + 1
+        }</td>
               <td class="Pname">${ele.passengername}</td>
               <td>${ele.passengerage}</td>
               <td>${ele.passengergender}</td>
@@ -626,21 +695,23 @@ class View {
       document
         .querySelector(".table-body-cancel")
         .insertAdjacentHTML("beforeend", html);
-        if(ele.passengerstatus!=="Cancelled"){
-          document.querySelectorAll(".checked")[index].classList.remove("hidden");
-        }
+      if (ele.passengerstatus !== "Cancelled") {
+        document.querySelectorAll(".checked")[index].classList.remove("hidden");
+      }
     });
     this._modalPNRCancel.classList.remove("hidden2");
     this.bindCheckedPassengerData(pnrnumberFoundlist[0].pnrnumber);
   }
 
-  //To get checked passenger data 
+  /**
+   * To Get searched passenger and ticket data
+   * @param {string} pnrnumber
+   */
   bindCheckedPassengerData(pnrnumber) {
     this._pnrnumberCancel = pnrnumber;
-    this._pnrcancelData=[];
+    this._pnrcancelData = [];
     document.querySelectorAll(".checked").forEach((ele, index) => {
       ele.addEventListener("change", (e) => {
-        //e.preventDefault();
         if (e.target.checked) {
           let getSiblings = (node) =>
             [...node.children].filter((c) => c !== node);
@@ -648,43 +719,41 @@ class View {
             document.querySelector(`.test${index + 1}`)
           );
           this._pnrcancelData.push([this._pnrnumberCancel,
-            siblingsToC[5].textContent,
-            siblingsToC[1].textContent,
-            this._CancelSeatNo,
-            siblingsToC[6].textContent])
-            //console.log(this._pnrcancelData);
+          siblingsToC[5].textContent,
+          siblingsToC[1].textContent,
+          this._CancelSeatNo,
+          siblingsToC[6].textContent])
         }
 
         //To remove passenger details of status checked to unchecked
         else {
-           let getSiblings = (node) =>
+          let getSiblings = (node) =>
             [...node.children].filter((c) => c !== node);
-           let siblingsToC = getSiblings(
+          let siblingsToC = getSiblings(
             document.querySelector(`.test${index + 1}`)
           );
-          this._pnrcancelData.forEach((ele,index)=>{
-            //console.log(ele[2],siblingsToC[1].textContent)
-            if(ele[2]===siblingsToC[1].textContent){
-              this._pnrcancelData.splice(index,index+1);   //remove the unchecked passenger details    
+          this._pnrcancelData.forEach((ele, index) => {
+            if (ele[2] === siblingsToC[1].textContent) {
+              this._pnrcancelData.splice(index, index + 1);   //remove the unchecked passenger details    
             }
           })
-          //console.log(this._pnrcancelData);
         }
       });
     });
   }
 
-  //For click operation on confirm button
+  /**
+   * To Handle on click event of confirm button
+   * @param {method} handler
+   */
   bindConfirmCancel(handler) {
     let status = false;
     document.querySelector(".btn_confirm").addEventListener("click", (e) => {
       e.preventDefault();
       this._cancelconformStatus = true;
-      //console.log("Confirmed");
-
-      this._pnrcancelData.forEach((ele,index)=>{
-        ele[4]= "Cancelled";
-        ele[1]= "NA";
+      this._pnrcancelData.forEach((ele, index) => {
+        ele[4] = "Cancelled";
+        ele[1] = "NA";
         ele[3] = "NA";
         handler(...this._pnrcancelData[index]);
       })
@@ -693,7 +762,9 @@ class View {
     });
   }
 
-  //To close PNR cancellation window
+  /**
+   * To Close PNR Cancellation window
+   */
   bindModelPNRCancelWindowClose() {
     this.getModelpnrCancelElements();
     this._closeButtonpnrCancel[2].addEventListener("click", (event) => {
@@ -701,8 +772,8 @@ class View {
       this._modalPNRCancel.classList.add("hidden2");
       this._overlay2[2].classList.add("hidden2");
     });
-   
+
   }
 }
 
-export default new View();
+export default new View();                              //Exporting View class object
