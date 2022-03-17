@@ -30,38 +30,9 @@
 
       <!-- MOVEMENTS -->
       <div class="train-list">
-        <div class="init-window">
-          <img src="./images/logo.png" alt=" logo" />
-          <p class="Booking_done">
-            Welcome to IRCTC <br />
-            <!-- 🚇🚇🚇 -->
-          </p>
-          <div class="content">
-            <div class="track"></div>
-            <div class="train">
-              <div class="front"></div>
-              <div class="wheels">
-                <div class="smallOne"></div>
-                <div class="smallTwo"></div>
-                <div class="smallThree"></div>
-                <div class="smallFour"></div>
-                <div class="smallFive"></div>
-                <div class="smallSix"></div>
-                <div class="big"></div>
-              </div>
-              <div class="cord"></div>
-              <div class="coach"></div>
-              <div class="coachTwo"></div>
-              <div class="windows"></div>
-
-              <div id="up" class="steam"></div>
-              <div id="up" class="steam2"></div>
-              <div id="up" class="steam3"></div>
-            </div>
-          </div>
-        </div>
+        
       </div>
-
+        
       <!-- OPERATION: Booking Ticket -->
       <div class="operation operation--transfer">
         <h2>Book Ticket</h2>
@@ -162,6 +133,7 @@
             type="text"
             placeholder="Name"
             class="passenger-name"
+            onkeydown="return /[a-z]/i.test(event.key)"
             required=""
           />
 
@@ -211,6 +183,7 @@
             type="text"
             placeholder="Name"
             class="passenger-name"
+            onkeydown="return /[a-z]/i.test(event.key)"
             required=""
           />
 
@@ -259,6 +232,7 @@
             type="text"
             placeholder="Name"
             class="passenger-name"
+            onkeydown="return /[a-z]/i.test(event.key)"
             required=""
           />
 
@@ -303,6 +277,7 @@
             type="text"
             placeholder="Name"
             class="passenger-name"
+            onkeydown="return /[a-z]/i.test(event.key)"
             required=""
           />
 
@@ -418,7 +393,7 @@
         <h4 class="PNR-status-details">
           Date of Journey: <span class="PNR-dateofjourney1">25-02-2022</span>
         </h4>
-        <div class="table-wrapper" style="overflow-x:auto;">
+        <div class="table-wrapper">
           <table class="PNR-table">
             <thead>
               <tr>
